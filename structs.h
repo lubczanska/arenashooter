@@ -29,10 +29,10 @@ struct Entity {
 	float dy;
 	int health;
 	float speed;
-	float atkSpeed;
-	float range; //bullet lifetime
 	float reload;
+	int damage;
 	int angle;
+	int weapon;
 	SDL_Texture *texture;
 	SDL_Color color;
 	void (*tick)(void);

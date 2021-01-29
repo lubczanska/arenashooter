@@ -18,7 +18,7 @@ static void die(void) {
     player = NULL;
 }
 
-static void enemyTouch(Entity *other) {
+static void enemyTouch(Entity *other) { //touching enemies inflicts damage
     if (other->side == SIDE_ENEMY) {
         player->health--;
     }
@@ -33,12 +33,11 @@ void addPlayer(void) {
 	player->texture = playerTexture;
 	player->health = PLAYER_HEALTH;
 	player->speed = PLAYER_SPEED;
-	player->atkSpeed = PLAYER_ATKSPEED;
-	player->range = 1;
     player->touch = enemyTouch;
 	player->x = SCREEN_WIDTH / 2;
 	player->y = SCREEN_HEIGHT / 2;
 	player->side = SIDE_PLAYER;
+	player->weapon = DEFAULT_GUN;
 	SDL_QueryTexture(player->texture, NULL, NULL, &player->w, &player->h);
 	player->color.r = 33;
 	player->color.g = 120;
@@ -49,13 +48,18 @@ void addPlayer(void) {
 
 void doPlayer(void) {
 	if (player != NULL) {
-		player->dx *= 0.85;
+		player->dx *= 0.85; //for smooth movement
 		player->dy *= 0.85;
 
-		if (app.keyboard[SDL_SCANCODE_W]) player->dy = -1;
+		if (app.keyboard[SDL_SCANCODE_W]) player->dy = -1; //multiplied by speed later on
 		if (app.keyboard[SDL_SCANCODE_S]) player->dy = 1;
 		if (app.keyboard[SDL_SCANCODE_A]) player->dx = -1;
 		if (app.keyboard[SDL_SCANCODE_D]) player->dx = 1;
+        if (app.keyboard[SDL_SCANCODE_0]) player->weapon = 0; //just for testing
+        if (app.keyboard[SDL_SCANCODE_1]) player->weapon = 1;
+        if (app.keyboard[SDL_SCANCODE_2]) player->weapon = 2;
+        if (app.keyboard[SDL_SCANCODE_3]) player->weapon = 3;
+        if (app.keyboard[SDL_SCANCODE_4]) player->weapon = 4;
 
         player->angle = getAngle(player->x, player->y, app.mouse.x, app.mouse.y);
 

@@ -5,8 +5,7 @@
 
 #define PLAYER_HEALTH 50
 #define PLAYER_SPEED 6
-#define PLAYER_ATKSPEED 12 //the bigger the slower
-#define PLAYER_ATKSPEED 12
+#define PLAYER_RELOAD 12 //the bigger the slower
 
 
 #define SCREEN_WIDTH   1600
@@ -21,9 +20,37 @@
 #define GLYPH_W  7
 #define GLYPH_H 9
 #define MAX_LINE_LENGTH 1024
+#define MAX_SND_CHANNELS 16
 
-enum {
+enum sides{
 	SIDE_NEUTRAL,
 	SIDE_PLAYER,
 	SIDE_ENEMY
+};
+
+enum weapons {
+    DEFAULT_GUN,
+    FAST_GUN,
+    SLOW_GUN,
+    TRIPLE_SHOT,
+    QUAD_SHOT,
+    LASER_PISTOL
+};
+
+enum enemies {
+    SHOOTER, //shooting
+    CROSS_SHOOTER,
+    LINE_SHOOTER,
+    RUNNER //melee
+};
+
+#define MAX_CHANNELS 2
+
+enum sounds {
+    SHOT
+};
+
+enum channels {
+    CH_ANY = -1,
+    CH_DONK
 };

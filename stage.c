@@ -16,6 +16,7 @@ extern SDL_Texture *loadTexture(char *filename);
 extern App app;
 extern Entity *player;
 extern Stage stage;
+extern int highscore;
 
 static void logic(void);
 static void draw(void);
@@ -23,6 +24,10 @@ static void drawStats(void);
 static void doWave(void);
 static void spawnEnemy(void);
 static void doPause(void);
+static void resetStage(void);
+extern void initTitle(void);
+
+
 
 static SDL_Texture *cursorTexture;
 static int enemySpawnTimer;
@@ -30,13 +35,31 @@ static int enemySpawnTimer;
 void initStage(void) {
 	app.delegate.logic = logic;
 	app.delegate.draw = draw;
-	
-	stage.entityTail = &stage.entityHead;
-	stage.bulletTail = &stage.bulletHead;
 
     cursorTexture = loadTexture("resources/cursor.png");
-	addPlayer();
+    resetStage();
+    addPlayer();
+
 	enemySpawnTimer = 0;
+}
+
+static void resetStage(void) {
+    Entity *e;
+
+    while (stage.entityHead.next) {
+        e = stage.entityHead.next;
+        stage.entityHead.next = e->next;
+        free(e);
+    }
+
+    while (stage.bulletHead.next) {
+        e = stage.bulletHead.next;
+        stage.bulletHead.next = e->next;
+        free(e);
+    }
+    memset(&stage, 0, sizeof(Stage));
+    stage.entityTail = &stage.entityHead;
+    stage.bulletTail = &stage.bulletHead;
 }
 
 static void logic(void) {
@@ -46,6 +69,10 @@ static void logic(void) {
         doEntities();
         doBullets();
         doWave();
+    }
+    if (player == NULL) {
+        highscore = MAX(stage.score, highscore);
+        initTitle();
     }
 }
 
@@ -89,7 +116,6 @@ static void spawnEnemy(void) {
                 y = SCREEN_HEIGHT + 100;
                 break;
         }
-
         addEnemy(x, y);
         enemySpawnTimer = MAX(FPS * 1.5 - stage.wave, 20);
 	}
@@ -106,4 +132,5 @@ static void drawStats(void) {
 	drawText(10, 10, 255, 255, 255, "HEALTH:%d", player != NULL ? player->health : 0);
 	drawText(250, 10, 255, 255, 255, "SCORE:%04d", stage.score);
     drawText(510, 10, 255, 255, 255,  "WAVE:%02d", stage.wave);
+    drawText(760, 10, 255, 255, 255,  "WEAPON:%02d", player->weapon);
 }

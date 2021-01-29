@@ -2,6 +2,7 @@
 
 #include "SDL2/SDL_image.h"
 
+
 extern App app;
 
 void prepareScene(void) {

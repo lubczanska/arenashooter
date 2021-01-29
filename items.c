@@ -51,7 +51,7 @@ static Entity *createPowerup(int x, int y) {
 }
 
 static void tick(void) {
-	self->health--;
+	self->health--; // they disappear if you don't pick them up
 }
 
 static void addHealthPowerup(int x, int y) {
@@ -107,6 +107,6 @@ static void speedTouch(Entity *other) {
 static void atkSpeedTouch(Entity *other) {
     if (other == player) {
         self->health = 0;
-        player->atkSpeed = MAX(player->atkSpeed - 0.2, 4);
+        //player->atkSpeed = MAX(player->atkSpeed - 0.2, 4);
     }
 }

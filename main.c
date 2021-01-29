@@ -7,11 +7,13 @@ extern void initSDL(void);
 extern void initStage(void);
 extern void prepareScene(void);
 extern void presentScene(void);
+extern void initTitle(void);
 
 App app;
 Entity *player;
 Entity *self;
 Stage stage;
+int highscore;
 
 static void capFrameRate(long *then, float *remainder) {
     long wait, frameTime;
@@ -35,9 +37,10 @@ int main(int argc, char *argv[])
 	initSDL();
 	atexit(cleanup);
 	initGame();
-	initStage();
+	initTitle(); //game starts with title screen
 	then = SDL_GetTicks();
 	remainder = 0;
+    highscore = 0;
 
 	while (1) {
 		prepareScene();
