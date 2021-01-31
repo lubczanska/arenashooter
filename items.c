@@ -1,7 +1,7 @@
 #include "common.h"
 
 extern SDL_Texture *loadTexture(char *filename);
-
+extern void playSound(int id, int channel);
 extern Entity *player;
 extern Entity *self;
 extern Stage stage;
@@ -94,6 +94,8 @@ static void healthTouch(Entity *other) {
 	if (other == player) {
 		self->health = 0;
 		player->health += 5;
+        playSound(POWERUP, CH_ITEM);
+        stage.waveState = NEW;
 	}
 }
 
@@ -101,12 +103,16 @@ static void speedTouch(Entity *other) {
     if (other == player) {
         self->health = 0;
         player->speed = MIN(player->speed + 0.5, 8);
+        playSound(POWERUP, CH_ITEM);
+        stage.waveState = NEW;
     }
 }
 
 static void atkSpeedTouch(Entity *other) {
     if (other == player) {
         self->health = 0;
+        playSound(POWERUP, CH_ITEM);
+        stage.waveState = NEW;
         //player->atkSpeed = MAX(player->atkSpeed - 0.2, 4);
     }
 }

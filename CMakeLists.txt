@@ -4,7 +4,7 @@ project(arenashooter C)
 find_package(SDL2 REQUIRED)
 include_directories(arenashooter ${SDL2_INCLUDE_DIRS})
 
-add_executable(arenashooter main.c draw.c init.c keyboard.c stage.c common.h defines.h structs.h entities.c player.c util.c text.c bullets.c enemies.c items.c title.c playerweapons.c sound.c enemyweapons.c)
+add_executable(arenashooter main.c draw.c init.c keyboard.c stage.c common.h defines.h structs.h entities.c player.c util.c text.c bullets.c enemies.c items.c title.c playerweapons.c sound.c enemyweapons.c bosses.c)
 target_link_libraries(arenashooter ${SDL2_LIBRARIES})
 
 INCLUDE(FindPkgConfig)

@@ -20,7 +20,7 @@
 #define GLYPH_W  7
 #define GLYPH_H 9
 #define MAX_LINE_LENGTH 1024
-#define MAX_SND_CHANNELS 16
+#define MAX_CHANNELS 16
 
 enum sides{
 	SIDE_NEUTRAL,
@@ -41,16 +41,32 @@ enum enemies {
     SHOOTER, //shooting
     CROSS_SHOOTER,
     LINE_SHOOTER,
-    RUNNER //melee
+    SNIPER,
+    SHOTGUN_SHOOTER,
+    RUNNER,  //melee
+    RAMMER
 };
 
-#define MAX_CHANNELS 2
-
 enum sounds {
-    SHOT
+    PLAYER_FIRE,
+    PLAYER_HIT,
+    POWERUP
 };
 
 enum channels {
     CH_ANY = -1,
-    CH_DONK
+    CH_PLAYER,
+    CH_ENEMY,
+    CH_ITEM
 };
+
+enum wave {
+    NEW,
+    NORMAL,
+    BOSS,
+    END,
+    BOSS_END
+};
+
+#define BOSS_BAR_GLYPH 16
+#define BOSS_BAR_EDGE 4

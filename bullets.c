@@ -16,6 +16,7 @@ extern void fireQuadShot(void);
 extern void shooterShot(void);
 extern void crossShooterShot(void);
 extern void lineShooterShot(void);
+extern void sniperShot(void);
 
 extern void playSound(int id, int channel);
 
@@ -64,6 +65,7 @@ static void bulletHitEntity(Entity *b) {
                     e->x += b->dx * 2; //knockback
                     e->y += b->dy * 2;
                 }
+			    if(e->side == SIDE_PLAYER) playSound(PLAYER_HIT, CH_PLAYER);
 				b->health = 0;
 				e->health -= b->damage;
 				return;
@@ -99,7 +101,7 @@ void firePlayerBullet(void) {
             fireDefaultGun();
             break;
     }
-    playSound(SHOT, CH_DONK);
+    playSound(PLAYER_FIRE, CH_PLAYER);
 
 }
 
@@ -113,6 +115,9 @@ void fireEnemyBullet(void) {
             break;
         case(LINE_SHOOTER):
             lineShooterShot();
+            break;
+        case(SNIPER):
+            sniperShot();
             break;
         default:
             break;

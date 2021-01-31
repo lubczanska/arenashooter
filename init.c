@@ -26,7 +26,7 @@ void initSDL(void) {
         printf("Couldn't initialize SDL Mixer\n");
         exit(1);
     }
-    Mix_AllocateChannels(MAX_SND_CHANNELS);
+    Mix_AllocateChannels(MAX_CHANNELS);
     app.window = SDL_CreateWindow("arenashooter v1.0", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, windowFlags);
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 	app.renderer = SDL_CreateRenderer(app.window, -1, rendererFlags);

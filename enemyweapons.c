@@ -40,3 +40,13 @@ void lineShooterShot(void) {
     b->dx = self->dx * MIN(7 + (stage.wave * 0.3), 16);
     b->dy = self->dy * MIN(7 + (stage.wave * 0.3), 16);
 }
+
+void sniperShot(void) {
+    Entity *b;
+    b = createBullet(self);
+    getSlope(player->x, player->y, b->x, b->y, &b->dx, &b->dy);
+    b->dx *= 30;
+    b->dy *= 30;
+    b->damage = 4;
+    //reload controlled by tick function
+}

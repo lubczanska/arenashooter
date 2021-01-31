@@ -29,10 +29,12 @@ void playMusic(int loop) {
 }
 
 void playSound(int id, int channel) {
-    SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "playing sound");
     Mix_PlayChannel(channel, sounds[id], 0);
 }
 
 static void loadSounds(void) {
-    sounds[SHOT] = Mix_LoadWAV("sounds/gun_sound.ogg");
+    sounds[PLAYER_FIRE] = Mix_LoadWAV("sounds/player_shoot.wav");
+    sounds[PLAYER_HIT] = Mix_LoadWAV("sounds/hit.wav");
+    sounds[POWERUP] = Mix_LoadWAV("sounds/pickup2.wav");
+    SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "loaded sounds");
 }

@@ -48,7 +48,6 @@ SDL_Texture *loadTexture(char *filename) {
 
 void blit(SDL_Texture *texture, int x, int y, int center) {
 	SDL_Rect dest;
-	
 	dest.x = x;
 	dest.y = y;
 	SDL_QueryTexture(texture, NULL, NULL, &dest.w, &dest.h);

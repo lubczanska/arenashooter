@@ -30,7 +30,7 @@ void drawText(int x, int y, int r, int g, int b, char *format, ...) {
 	
 	for (i = 0 ; i < len ; i++) {
 		c = drawTextBuffer[i];
-		if (c >= ' ' && c <= 'Z') {
+		if (c >= ' ' && c <= 'z') {
 			rect.x = (c - ' ') * GLYPH_W;
 			
 			blitRect(fontTexture, &rect, x, y);

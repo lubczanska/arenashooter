@@ -56,6 +56,7 @@ typedef struct {
 	int wave;
 	int waveLeftToSpawn;
 	int waveEnemies;
+	int waveState;
 	Entity entityHead, *entityTail;
 	Entity bulletHead, *bulletTail;
 } Stage;
