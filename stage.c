@@ -73,13 +73,13 @@ static void resetStage(void) {
 }
 
 static void logic(void) {
-   // if (stage.pause) doPause();
-    //else {
+    if (stage.pause) doPause();
+    else {
         doPlayer();
         doEntities();
         doBullets();
         doWave();
-    //}
+    }
     if (player == NULL) {
         highscore = MAX(stage.score, highscore);
         initTitle();
@@ -87,7 +87,11 @@ static void logic(void) {
 }
 
 static void doPause(void) {
-    if (app.keyboard[SDL_SCANCODE_ESCAPE]) stage.pause = (stage.pause++) % 2;
+    if (app.keyboard[SDL_SCANCODE_SPACE]) {
+        SDL_Delay(100);
+        stage.pause = 0;
+    }
+    if (app.keyboard[SDL_SCANCODE_ESCAPE]) SDL_Quit();
 }
 
 static void doWave(void) {

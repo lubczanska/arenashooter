@@ -5,6 +5,7 @@ extern void getSlope(int x1, int y1, int x2, int y2, float *dx, float *dy);
 extern void fireEnemyBullet(void);
 extern float getAngle(int x1, int y1, int x2, int y2);
 extern int getDistance(int x1, int y1, int x2, int y2);
+void blitRotated(SDL_Texture *texture, int x, int y, float angle);
 extern SDL_Texture *loadTexture(char *filename);
 
 extern Entity *player;
@@ -21,9 +22,13 @@ static void tickSniper(void);
 static void die(void);
 
 static SDL_Texture *enemyTexture;
+static SDL_Texture *laserPointer;
 
 void initEnemies(void) {
 	enemyTexture = loadTexture("resources/playerSquare.png");
+	laserPointer = loadTexture("resources/laserPointerLong.png");
+    SDL_SetTextureColorMod(laserPointer, 255, 0, 0);
+    SDL_SetTextureAlphaMod(laserPointer, 30);
 }
 
 
@@ -41,7 +46,6 @@ void spawnSniper(int x, int y) {
     e->reload = FPS*3;
     e->weapon = SNIPER;
     e->texture = enemyTexture;
-    e->speed = MIN(3 + (stage.wave * 0.1), 7); //wave difficulty modificator
     e->tick = tickSniper;
     e->health = 7;
     SDL_QueryTexture(e->texture, NULL, NULL, &e->w, &e->h);
@@ -167,8 +171,9 @@ void spawnRammer(int x, int y) {
 
     e->weapon = 0;
     e->texture = enemyTexture;
-    e->speed = 8;
-    e->reload = 8;
+    e->speed = 4;
+    e->reload = FPS * 2;
+    e->health = 4;
     e->tick = tickRammer;
     SDL_QueryTexture(e->texture, NULL, NULL, &e->w, &e->h);
     e->color.r = 100;
@@ -183,7 +188,8 @@ void spawnRammer(int x, int y) {
 static void tickSniper(void) {
     if (player != NULL) {
         self->angle = getAngle(self->x, self->y, player->x, player->y);
-        if (self->reload <=0) {
+        blitRotated(laserPointer, self->x, self->y, self->angle - 90);
+        if (self->reload <=0 ) {
             fireEnemyBullet();
             self->reload = FPS * 3;
         }
@@ -193,18 +199,20 @@ static void tickSniper(void) {
 static void tickRammer(void) {
     if (player != NULL) {
         if (self->weapon == 1) {
-            if (self->x - self->w <= 0 || self->x + self->w >= SCREEN_WIDTH || self->y - self->h <= 0 || self->y + self->h >= SCREEN_HEIGHT) {
-                self->speed = 8;
+            if (self->speed >= 6 && (self->x - self->w <= 0 || self->x + self->w >= SCREEN_WIDTH || self->y - self->h <= 0 || self->y + self->h >= SCREEN_HEIGHT)) {
+                self->speed = 2;
                 self->weapon = 0;
+                self->reload = FPS;
             }
             else {
                 self->speed *= 1.1;
-                self->reload = 10;
             }
         }
         else {
             self->angle = getAngle(self->x, self->y, player->x, player->y);
-            if (self->reload <= 0) {
+            getSlope(player->x, player->y, self->x, self->y, &self->dx, &self->dy);
+            if (self->reload <= 0 && getDistance(self->x, self->y, player->x, player->y) < SCREEN_HEIGHT / 2) {
+                self->speed = 4;
                 getSlope(player->x, player->y, self->x, self->y, &self->dx, &self->dy);
                 self->weapon = 1;
             }

@@ -8,8 +8,8 @@
 #define PLAYER_RELOAD 12 //the bigger the slower
 
 
-#define SCREEN_WIDTH   1600
-#define SCREEN_HEIGHT  900
+#define SCREEN_WIDTH   1920
+#define SCREEN_HEIGHT  1080
 
 #define FPS 60
 

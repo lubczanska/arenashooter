@@ -60,6 +60,10 @@ void doPlayer(void) {
         if (app.keyboard[SDL_SCANCODE_2]) player->weapon = 2;
         if (app.keyboard[SDL_SCANCODE_3]) player->weapon = 3;
         if (app.keyboard[SDL_SCANCODE_4]) player->weapon = 4;
+        if (app.keyboard[SDL_SCANCODE_SPACE]) {
+            SDL_Delay(100);
+            stage.pause = 1;
+        }
 
         player->angle = getAngle(player->x, player->y, app.mouse.x, app.mouse.y);
 
