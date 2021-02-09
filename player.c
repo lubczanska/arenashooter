@@ -47,8 +47,8 @@ void addPlayer(void) {
 	player->weapon = fireDefaultGun;
 	player->atkSpeed = 0;
 	SDL_QueryTexture(player->texture, NULL, NULL, &player->w, &player->h);
-	player->color.r = 33;
-	player->color.g = 120;
+	player->color.r = 255;
+	player->color.g = 255;
 	player->color.b = 255;
 	player->color.a = 255;
 	player->die = die;

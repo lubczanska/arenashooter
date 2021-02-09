@@ -20,8 +20,14 @@ void loadMusic(char *filename) {
         Mix_FreeMusic(music);
         music = NULL;
     }
-
     music = Mix_LoadMUS(filename);
+}
+
+static void loadSounds(void) {
+    sounds[PLAYER_FIRE] = Mix_LoadWAV("sounds/player_shot.wav");
+    sounds[PLAYER_HIT] = Mix_LoadWAV("sounds/player_hit.wav");
+    sounds[POWERUP] = Mix_LoadWAV("sounds/item_pick.wav");
+    SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "loaded sounds");
 }
 
 void playMusic(int loop) {
@@ -30,11 +36,4 @@ void playMusic(int loop) {
 
 void playSound(int id, int channel) {
     Mix_PlayChannel(channel, sounds[id], 0);
-}
-
-static void loadSounds(void) {
-    sounds[PLAYER_FIRE] = Mix_LoadWAV("sounds/player_shot.wav");
-    sounds[PLAYER_HIT] = Mix_LoadWAV("sounds/player_hit.wav");
-    sounds[POWERUP] = Mix_LoadWAV("sounds/item_pick.wav");
-    SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "loaded sounds");
 }

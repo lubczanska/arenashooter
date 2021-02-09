@@ -23,6 +23,7 @@ extern Entity *player;
 extern Stage stage;
 extern int highscore;
 
+
 static void logic(void);
 static void draw(void);
 static void drawStats(void);
@@ -49,6 +50,9 @@ extern void spawnSlug(int x, int y);
 
 extern void spawnBoss(void);
 
+extern int prompts[11][2];
+extern int nextPrompt;
+extern void displayPrompt(int index);
 static SDL_Texture *cursorTexture;
 static int enemySpawnTimer;
 static int playerDeathTimer;
@@ -94,11 +98,11 @@ static void resetStage(void) {
 static void logic(void) {
     if (stage.pause) doPause();
     else {
-        doPlayer();
         doEntities();
         doBullets();
         doEffects();
         doWave();
+        doPlayer();
     }
     if (player == NULL) {
         highscore = MAX(stage.score, highscore);
@@ -127,7 +131,12 @@ static void doWave(void) {
     else if (stage.waveState == NEW) {
         Entity *e;
         for (e = stage.entityHead.next; e != NULL; e = e->next) {
-            if (e->side == SIDE_NEUTRAL) e->health = 0;
+            if (e->side == SIDE_NEUTRAL) e->health = 0; //destroy the other item on boss defeat
+        }
+        if (stage.score >= prompts[nextPrompt][1] && prompts[nextPrompt][0] == 0) {
+            displayPrompt(nextPrompt);
+            prompts[nextPrompt][0] = 1;
+            ++nextPrompt;
         }
         stage.waveState = NEW_BEGIN;
     }

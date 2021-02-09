@@ -79,7 +79,6 @@ void addPowerupBoss(void) {
 
 static Entity *createPowerup(int x, int y) {
 	Entity *e;
-	
 	e = malloc(sizeof(Entity));
 	memset(e, 0, sizeof(Entity));
 	stage.entityTail->next = e;
@@ -93,7 +92,6 @@ static Entity *createPowerup(int x, int y) {
 
 static void addHealthPowerup(int x, int y) {
 	Entity *e;
-	
 	e = createPowerup(x, y);
 	e->texture = powerupTexture;
     e->color.r = 250;
@@ -105,7 +103,6 @@ static void addHealthPowerup(int x, int y) {
 
 static void addMaxHealthPowerup(int x, int y) {
     Entity *e;
-
     e = createPowerup(x, y);
     e->texture = powerupTexture;
     e->color.r = 250;
@@ -116,7 +113,6 @@ static void addMaxHealthPowerup(int x, int y) {
 }
 static void addSpeedPowerup(int x, int y) {
     Entity *e;
-
     e = createPowerup(x, y);
     e->texture = powerupTexture;
     e->color.r = 128;

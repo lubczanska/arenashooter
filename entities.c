@@ -58,7 +58,8 @@ void drawEntities(void) {
     Entity *e;
     for (e = stage.entityHead.next; e != NULL; e = e->next) {
         if (e->hit > 0) {
-            SDL_SetTextureColorMod(e->texture, 255, 255, 255);
+            if (e->side == SIDE_PLAYER) SDL_SetTextureColorMod(e->texture, 255, 0, 0);
+            else SDL_SetTextureColorMod(e->texture, 255, 255, 255);
             --e->hit;
         }
         else SDL_SetTextureColorMod(e->texture, e->color.r, e->color.g, e->color.b);

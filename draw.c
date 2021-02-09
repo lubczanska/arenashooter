@@ -16,7 +16,7 @@ void presentScene(void) {
 
 static SDL_Texture *getTexture(char *name) {
 	Texture *t;
-	for (t = app.textureHead.next; t != NULL ;t = t->next) {
+	for (t = app.textureHead.next; t != NULL; t = t->next) {
 		if (strcmp(t->name, name) == 0) return t->texture;
 	}
 	return NULL;

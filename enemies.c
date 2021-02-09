@@ -88,7 +88,7 @@ static void tickRammer(void) {
         if (self->damage == 1) {
             if (self->speed >= 6 && (self->x - self->w <= 0 || self->x + self->w >= SCREEN_WIDTH || self->y - self->h <= 0 || self->y + self->h >= SCREEN_HEIGHT)) {
                 self->speed = 2;
-                self->weapon = 0;
+                self->damage = 0;
                 self->reload = FPS;
             }
             else {

@@ -10,7 +10,7 @@ static void bossSplitDie0(void);
 static void bossSplitDie1(void);
 static void bossSplitDie2(void);
 extern SDL_Texture *loadTexture(char *filename);
-static SDL_Texture *bossTexture;
+static SDL_Texture *bossTexture[6];
 
 extern void bossDie(void);
 extern App app;
@@ -28,7 +28,6 @@ void spawnBossSplit(void) {
     stage.entityTail->next = e;
     stage.entityTail = e;
 
-    bossTexture = loadTexture("resources/bossSplit.png");
     e->health = 30;
     e->tick = bossSplitTick;
     e->die = bossSplitDie0;
@@ -38,7 +37,7 @@ void spawnBossSplit(void) {
     e->y = SCREEN_HEIGHT / 2;
     e->dx = (1 + (rand() % 99)) * 0.01;
     e->dy = (1 + (rand() % 99)) * 0.01;
-    e->texture = bossTexture;
+    e->texture = bossTexture[B_SPLIT_0];
     SDL_QueryTexture(e->texture, NULL, NULL, &e->w, &e->h);
     e->color.r = 255;
     e->color.g = 255;
@@ -67,7 +66,6 @@ static void bossSplitDie0(void) {
         stage.entityTail->next = e;
         stage.entityTail = e;
 
-        bossTexture = loadTexture("resources/bossSplit2.png");
         e->health = 15;
         e->tick = bossSplitTick;
         e->die = bossSplitDie1;
@@ -77,7 +75,7 @@ static void bossSplitDie0(void) {
         e->y = self->y;
         e->dx = (1 + ((rand() + i*i) % 99)) * 0.01;
         e->dy = (1 + ((rand() + i*i) % 99)) * 0.01;
-        e->texture = bossTexture;
+        e->texture = bossTexture[B_SPLIT_1];
         SDL_QueryTexture(e->texture, NULL, NULL, &e->w, &e->h);
         e->color.r = 0;
         e->color.g = 255;
@@ -99,7 +97,6 @@ static void bossSplitDie1(void) {
         stage.entityTail->next = e;
         stage.entityTail = e;
 
-        bossTexture = loadTexture("resources/bossSplit3.png");
         e->health = 5;
         e->tick = bossSplitTick;
         e->die = bossSplitDie2;
@@ -109,7 +106,7 @@ static void bossSplitDie1(void) {
         e->y = self->y;
         e->dx = (1 + ((rand() + i*i) % 99)) * 0.01;
         e->dy = (1 + ((rand() + i*i) % 99)) * 0.01;
-        e->texture = bossTexture;
+        e->texture = bossTexture[B_SPLIT_2];
         SDL_QueryTexture(e->texture, NULL, NULL, &e->w, &e->h);
         e->color.r = 255;
         e->color.g = 0;

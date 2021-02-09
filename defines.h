@@ -43,6 +43,15 @@ enum enemies {
     SLUG
 };
 
+enum bosses {
+    B_SHOOTER,
+    B_SPAWNER,
+    B_SPIN,
+    B_SPLIT_0,
+    B_SPLIT_1,
+    B_SPLIT_2
+};
+
 enum sounds {
     PLAYER_FIRE,
     PLAYER_HIT,
@@ -64,6 +73,21 @@ enum wave {
     END,
     BOSS_END
 };
+
+enum prompts {
+    ENEMIES_1,
+    ITEMS,
+    ENEMIES_2,
+    BOSS_1,
+    ITEMS_BOSS,
+    ENEMIES_3,
+    ENEMIES_4,
+    BOSS_2,
+    ENEMIES_5,
+    BOSS_3,
+    BOSS_4
+};
+
 
 #define BOSS_BAR_GLYPH 12
 #define PLAYER_BAR_GLYPH 8

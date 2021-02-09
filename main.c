@@ -14,6 +14,8 @@ Entity *player;
 Entity *self;
 Stage stage;
 int highscore;
+int prompts[11];
+int nextPrompt;
 
 static void capFrameRate(long *then, float *remainder) {
     long wait, frameTime;

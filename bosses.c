@@ -27,6 +27,17 @@ extern void spawnBossSpawner(void);
 extern void spawnBossSpin(void);
 extern void spawnBossSplit(void);
 
+SDL_Texture *bossTexture[6];
+
+void initBosses(void) {
+    bossTexture[B_SHOOTER] = loadTexture("resources/playerSquare.png");
+    bossTexture[B_SPAWNER] = loadTexture("resources/playerSquare.png");
+    bossTexture[B_SPIN] = loadTexture("resources/playerSquare.png");
+    bossTexture[B_SPLIT_0] = loadTexture("resources/bossSplit.png");
+    bossTexture[B_SPLIT_1] = loadTexture("resources/bossSplit2.png");
+    bossTexture[B_SPLIT_2] = loadTexture("resources/bossSplit3.png");
+}
+
 void spawnBoss(void) {
     switch(rand() % 4) {
         case 0:

@@ -3,6 +3,7 @@
 extern void drawText(int x, int y, int r, int g, int b, int center, char *format, ...);
 extern void initStage(void);
 extern void initHelp(void);
+extern void initSettings(void);
 
 extern App app;
 extern int highscore;
@@ -25,7 +26,8 @@ static void logic(void) {
     if (--textBlink < 0) (textBlink = FPS);
     if (app.keyboard[SDL_SCANCODE_W]) initStage();
     if (app.keyboard[SDL_SCANCODE_H]) initHelp();
-    if (app.keyboard[SDL_SCANCODE_ESCAPE]) exit(0);;
+    if (app.keyboard[SDL_SCANCODE_S]) initSettings();
+    if (app.keyboard[SDL_SCANCODE_ESCAPE]) exit(0);
 }
 
 static void draw(void) {

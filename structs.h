@@ -62,6 +62,8 @@ typedef struct {
 	int keyboard[MAX_KEYBOARD_KEYS];
     Mouse mouse;
 	Texture textureHead, *textureTail;
+	int volumeMusic;
+	int volumeSounds;
 } App;
 
 typedef struct {

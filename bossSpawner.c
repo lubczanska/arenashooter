@@ -7,7 +7,7 @@ extern void getSlope(int x1, int y1, int x2, int y2, float *dx, float *dy);
 extern void spawnShooter(int x, int y);
 extern void spawnRunner(int x, int y);
 extern SDL_Texture *loadTexture(char *filename);
-static SDL_Texture *bossTexture;
+extern SDL_Texture *bossTexture[6];
 
 extern void bossDie(void);
 
@@ -25,8 +25,6 @@ void spawnBossSpawner(void) {
     stage.entityTail->next = boss;
     stage.entityTail = boss;
 
-    bossTexture = loadTexture("resources/playerSquare.png");
-
     boss->health = 40;
     if (stage.wave >= 10) boss->tick = bossSpawnerTick2;
     else boss->tick = bossSpawnerTick1;
@@ -35,7 +33,7 @@ void spawnBossSpawner(void) {
     boss->speed = 1;
     boss->x = SCREEN_WIDTH / 2;
     boss->y = SCREEN_HEIGHT / 2;
-    boss->texture = bossTexture;
+    boss->texture = bossTexture[B_SPAWNER];
     SDL_QueryTexture(boss->texture, NULL, NULL, &boss->w, &boss->h);
     boss->color.r = 255;
     boss->color.g = 255;

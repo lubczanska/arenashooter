@@ -60,6 +60,7 @@ static void tickSlug(void) {
         if (self->reload <= 0) {
             slugShot();
             self->reload = 8;
+            //self->reload /= getDistance(self->x, self->y, self->x + self->dx, self->y + self->dy);
         }
     }
 }

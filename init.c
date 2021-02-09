@@ -5,11 +5,14 @@
 
 extern void initBullets(void);
 extern void initEnemies(void);
+extern void initBosses(void);
 extern void initEffects(void);
 extern void initFonts(void);
 extern void initItems(void);
 extern void initPlayer(void);
 extern void initSounds(void);
+void loadMusic(char *filename);
+void playMusic(int loop);
 
 extern App app;
 
@@ -23,11 +26,16 @@ void initSDL(void) {
 		printf("Couldn't initialize SDL: %s\n", SDL_GetError());
 		exit(1);
 	}
-    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) == -1) {
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
         printf("Couldn't initialize SDL Mixer\n");
         exit(1);
     }
     Mix_AllocateChannels(MAX_CHANNELS);
+    app.volumeMusic = 30;
+    app.volumeSounds = 50;
+    Mix_Volume(CH_ANY, app.volumeSounds);
+    Mix_VolumeMusic(app.volumeMusic);
+
     app.window = SDL_CreateWindow("arenashooter v1.0", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, windowFlags);
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 	app.renderer = SDL_CreateRenderer(app.window, -1, rendererFlags);
@@ -40,10 +48,13 @@ void initGame(void) {
 	initFonts();
 	initPlayer();
 	initEnemies();
+	initBosses();
 	initBullets();
 	initItems();
     initEffects();
     initSounds();
+    loadMusic("sounds/muzyczka.mp3");
+    playMusic(1);
 }
 
 void cleanup(void) {

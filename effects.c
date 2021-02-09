@@ -11,7 +11,7 @@ extern Stage stage;
 static SDL_Texture *whiteSquare8;
 
 void initEffects(void) {
-    whiteSquare8 = loadTexture("resources/square12.png");
+    whiteSquare8 = loadTexture("resources/square8.png");
 }
 
 void doEffects(void) {
@@ -58,7 +58,10 @@ void addEnemyDeathEffect(Entity *e) {
 
         f->color = e->color;
 //        f->color.a = rand() % 255;
-
+        f->color.r = 110;
+        f->color.g = 110;
+        f->color.b = 110;
+        f->color.a = 255;
         f->lifetime = rand() % FPS;
     }
 }
@@ -82,7 +85,11 @@ void addPlayerDeathEffect(void)
 
         f->texture = whiteSquare8;
 
-        f->color = player->color;
+        //f->color = player->color;
+        f->color.r = 110;
+        f->color.g = 110;
+        f->color.b = 110;
+        f->color.a = 255;
 
         f->lifetime = rand() % FPS;
     }

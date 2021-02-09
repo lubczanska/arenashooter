@@ -6,7 +6,7 @@ extern float getAngle(int x1, int y1, int x2, int y2);
 extern void getSlope(int x1, int y1, int x2, int y2, float *dx, float *dy);
 static void bossShooterTick(void);
 extern SDL_Texture *loadTexture(char *filename);
-static SDL_Texture *bossTexture;
+extern SDL_Texture *bossTexture[6];
 
 extern void bossDie(void);
 extern void shooterShot(void);
@@ -21,7 +21,6 @@ void spawnBossShooter(void) {
     stage.entityTail->next = boss;
     stage.entityTail = boss;
 
-    bossTexture = loadTexture("resources/shooter.png");
     boss->health = 30;
     boss->tick = bossShooterTick;
     boss->die = bossDie;
@@ -29,7 +28,7 @@ void spawnBossShooter(void) {
     boss->side = SIDE_BOSS;
     boss->x = SCREEN_WIDTH / 2;
     boss->y = SCREEN_HEIGHT / 2;
-    boss->texture = bossTexture;
+    boss->texture = bossTexture[B_SHOOTER];
     SDL_QueryTexture(boss->texture, NULL, NULL, &boss->w, &boss->h);
     boss->color.r = 255;
     boss->color.g = 255;

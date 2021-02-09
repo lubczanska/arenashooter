@@ -70,8 +70,8 @@ void sniperShot(void) {
     Entity *b;
     b = createBullet(self);
     getSlope(player->x, player->y, b->x, b->y, &b->dx, &b->dy);
-    b->dx *= 30;
-    b->dy *= 30;
+    b->dx *= 40;
+    b->dy *= 40;
     b->damage = 4;
     //reload controlled by tick function
 }
