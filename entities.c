@@ -30,15 +30,13 @@ static void touchOthers(void) {
 
 void doEntities(void) {
 	Entity *e, *prev;
-	
 	prev = &stage.entityHead;
 	for (e = stage.entityHead.next; e != NULL; e = e->next) {
 		self = e;
-		
-		if (e->tick) e->tick();
-		e->x += e->dx * e->speed;
-		e->y += e->dy * e->speed;
-		
+
+        if (e->tick) e->tick();
+            e->x += e->dx * e->speed;
+            e->y += e->dy * e->speed;
 		if (e->touch) touchOthers();
 		e->reload = MAX(e->reload - 1, 0);
 		//collisions with borders
@@ -59,7 +57,11 @@ void doEntities(void) {
 void drawEntities(void) {
     Entity *e;
     for (e = stage.entityHead.next; e != NULL; e = e->next) {
-        SDL_SetTextureColorMod(e->texture, e->color.r, e->color.g, e->color.b);
+        if (e->hit > 0) {
+            SDL_SetTextureColorMod(e->texture, 255, 255, 255);
+            --e->hit;
+        }
+        else SDL_SetTextureColorMod(e->texture, e->color.r, e->color.g, e->color.b);
         blitRotated(e->texture, e->x, e->y, e->angle);
     }
 }

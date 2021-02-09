@@ -5,6 +5,7 @@
 
 extern void initBullets(void);
 extern void initEnemies(void);
+extern void initEffects(void);
 extern void initFonts(void);
 extern void initItems(void);
 extern void initPlayer(void);
@@ -30,6 +31,7 @@ void initSDL(void) {
     app.window = SDL_CreateWindow("arenashooter v1.0", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, windowFlags);
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");
 	app.renderer = SDL_CreateRenderer(app.window, -1, rendererFlags);
+    SDL_SetRenderDrawBlendMode(app.renderer, SDL_BLENDMODE_BLEND);
 	IMG_Init(IMG_INIT_PNG | IMG_INIT_JPG);
 	SDL_ShowCursor(0);
 }
@@ -40,12 +42,13 @@ void initGame(void) {
 	initEnemies();
 	initBullets();
 	initItems();
+    initEffects();
     initSounds();
-
 }
 
 void cleanup(void) {
 	SDL_DestroyRenderer(app.renderer);
 	SDL_DestroyWindow(app.window);
+    SDL_QuitSubSystem(SDL_INIT_VIDEO);
 	SDL_Quit();
 }

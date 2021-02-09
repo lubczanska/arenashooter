@@ -1,12 +1,17 @@
 #include "common.h"
 
-extern void firePlayerBullet(void);
 extern float getAngle(int x1, int y1, int x2, int y2);
 extern SDL_Texture *loadTexture(char *filename);
 
 extern App app;
 extern Entity *player;
 extern Stage stage;
+
+extern void fireDefaultGun(void);
+extern void fireFastGun(void);
+extern void fireTripleGun(void);
+extern void fireSlowGun(void);
+extern void addPlayerDeathEffect(void);
 
 static SDL_Texture *playerTexture;
 
@@ -15,11 +20,13 @@ void initPlayer(void) {
 }
 
 static void die(void) {
+    addPlayerDeathEffect();
     player = NULL;
 }
 
 static void enemyTouch(Entity *other) { //touching enemies inflicts damage
-    if (other->side == SIDE_ENEMY) {
+    if (other->side >= SIDE_ENEMY) {
+        player->hit = 4;
         player->health--;
     }
 }
@@ -37,7 +44,8 @@ void addPlayer(void) {
 	player->x = SCREEN_WIDTH / 2;
 	player->y = SCREEN_HEIGHT / 2;
 	player->side = SIDE_PLAYER;
-	player->weapon = DEFAULT_GUN;
+	player->weapon = fireDefaultGun;
+	player->atkSpeed = 0;
 	SDL_QueryTexture(player->texture, NULL, NULL, &player->w, &player->h);
 	player->color.r = 33;
 	player->color.g = 120;
@@ -51,15 +59,14 @@ void doPlayer(void) {
 		player->dx *= 0.85; //for smooth movement
 		player->dy *= 0.85;
 
-		if (app.keyboard[SDL_SCANCODE_W]) player->dy = -1; //multiplied by speed later on
+		if (app.keyboard[SDL_SCANCODE_W]) player->dy = -1;
 		if (app.keyboard[SDL_SCANCODE_S]) player->dy = 1;
 		if (app.keyboard[SDL_SCANCODE_A]) player->dx = -1;
 		if (app.keyboard[SDL_SCANCODE_D]) player->dx = 1;
-        if (app.keyboard[SDL_SCANCODE_0]) player->weapon = 0; //just for testing
-        if (app.keyboard[SDL_SCANCODE_1]) player->weapon = 1;
-        if (app.keyboard[SDL_SCANCODE_2]) player->weapon = 2;
-        if (app.keyboard[SDL_SCANCODE_3]) player->weapon = 3;
-        if (app.keyboard[SDL_SCANCODE_4]) player->weapon = 4;
+        if (app.keyboard[SDL_SCANCODE_0]) player->weapon = fireDefaultGun; //just for testing
+        if (app.keyboard[SDL_SCANCODE_1]) player->weapon = fireFastGun;
+        if (app.keyboard[SDL_SCANCODE_3]) player->weapon = fireTripleGun;
+        if (app.keyboard[SDL_SCANCODE_4]) player->weapon = fireSlowGun;
         if (app.keyboard[SDL_SCANCODE_SPACE]) {
             SDL_Delay(100);
             stage.pause = 1;
@@ -67,7 +74,7 @@ void doPlayer(void) {
 
         player->angle = getAngle(player->x, player->y, app.mouse.x, app.mouse.y);
 
-        if (player->reload == 0 && app.mouse.button[SDL_BUTTON_LEFT]) firePlayerBullet();
+        if (player->reload == 0 && app.mouse.button[SDL_BUTTON_LEFT]) player->weapon();
 	}
 }
 

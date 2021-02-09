@@ -3,10 +3,9 @@
 #define STRNCPY(dest, src, n) strncpy(dest, src, n); dest[n - 1] = '\0'
 #define PI 3.141592653589793
 
-#define PLAYER_HEALTH 50
+#define PLAYER_HEALTH 20 //base stats
 #define PLAYER_SPEED 6
-#define PLAYER_RELOAD 12 //the bigger the slower
-
+#define PLAYER_RELOAD 12
 
 #define SCREEN_WIDTH   1920
 #define SCREEN_HEIGHT  1080
@@ -17,34 +16,31 @@
 #define MAX_MOUSE_BUTTONS 6
 
 #define MAX_NAME_LENGTH 32
-#define GLYPH_W  7
-#define GLYPH_H 9
+#define GLYPH_W  16
+#define GLYPH_H 30
 #define MAX_LINE_LENGTH 1024
 #define MAX_CHANNELS 16
+
+#define HELP_PAGES 4
 
 enum sides{
 	SIDE_NEUTRAL,
 	SIDE_PLAYER,
-	SIDE_ENEMY
-};
-
-enum weapons {
-    DEFAULT_GUN,
-    FAST_GUN,
-    SLOW_GUN,
-    TRIPLE_SHOT,
-    QUAD_SHOT,
-    LASER_PISTOL
+	SIDE_ENEMY,
+	SIDE_BOSS //for eliminating boss knockback
 };
 
 enum enemies {
-    SHOOTER, //shooting
-    CROSS_SHOOTER,
+    SHOOTER,
     LINE_SHOOTER,
+    CROSS_SHOOTER,
+    MULTI_SHOOTER,
+    SLOW_MULTI_SHOOTER,
+    STAR_SHOOTER,
     SNIPER,
-    SHOTGUN_SHOOTER,
-    RUNNER,  //melee
-    RAMMER
+    RUNNER,
+    RAMMER,
+    SLUG
 };
 
 enum sounds {
@@ -62,11 +58,12 @@ enum channels {
 
 enum wave {
     NEW,
+    NEW_BEGIN,
     NORMAL,
     BOSS,
     END,
     BOSS_END
 };
 
-#define BOSS_BAR_GLYPH 16
-#define BOSS_BAR_EDGE 4
+#define BOSS_BAR_GLYPH 12
+#define PLAYER_BAR_GLYPH 8

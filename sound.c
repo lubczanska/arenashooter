@@ -33,8 +33,8 @@ void playSound(int id, int channel) {
 }
 
 static void loadSounds(void) {
-    sounds[PLAYER_FIRE] = Mix_LoadWAV("sounds/player_shoot.wav");
-    sounds[PLAYER_HIT] = Mix_LoadWAV("sounds/hit.wav");
-    sounds[POWERUP] = Mix_LoadWAV("sounds/pickup2.wav");
+    sounds[PLAYER_FIRE] = Mix_LoadWAV("sounds/player_shot.wav");
+    sounds[PLAYER_HIT] = Mix_LoadWAV("sounds/player_hit.wav");
+    sounds[POWERUP] = Mix_LoadWAV("sounds/item_pick.wav");
     SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "loaded sounds");
 }

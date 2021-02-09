@@ -1,5 +1,6 @@
 typedef struct Texture Texture;
 typedef struct Entity Entity;
+typedef struct Effect Effect;
 
 typedef struct {
 	void (*logic)(void);
@@ -23,22 +24,35 @@ struct Entity {
 	int side;
 	float x;
 	float y;
-	int w;
-	int h;
 	float dx;
 	float dy;
+    int w;
+    int h;
 	int health;
 	float speed;
 	float reload;
+	float atkSpeed;
 	int damage;
 	int angle;
-	int weapon;
+	int hit;
 	SDL_Texture *texture;
 	SDL_Color color;
+    void (*weapon)(void);
 	void (*tick)(void);
 	void (*touch)(Entity *other);
 	void (*die)(void);
 	Entity *next;
+};
+
+struct Effect {
+    float x;
+    float y;
+    float dx;
+    float dy;
+    int lifetime;
+    SDL_Color color;
+    SDL_Texture *texture;
+    Effect *next;
 };
 
 typedef struct {
@@ -59,4 +73,5 @@ typedef struct {
 	int waveState;
 	Entity entityHead, *entityTail;
 	Entity bulletHead, *bulletTail;
+    Effect effectHead, *effectTail;
 } Stage;

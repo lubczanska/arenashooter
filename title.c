@@ -1,7 +1,8 @@
 #include "common.h"
 
-extern void drawText(int x, int y, int r, int g, int b, char *format, ...);
+extern void drawText(int x, int y, int r, int g, int b, int center, char *format, ...);
 extern void initStage(void);
+extern void initHelp(void);
 
 extern App app;
 extern int highscore;
@@ -23,11 +24,12 @@ void initTitle(void) {
 static void logic(void) {
     if (--textBlink < 0) (textBlink = FPS);
     if (app.keyboard[SDL_SCANCODE_W]) initStage();
-    if (app.keyboard[SDL_SCANCODE_ESCAPE]) SDL_Quit();
+    if (app.keyboard[SDL_SCANCODE_H]) initHelp();
+    if (app.keyboard[SDL_SCANCODE_ESCAPE]) exit(0);;
 }
 
-static void draw(void) { //TODO: display proper logo and instructions, settings, save highscore to file
-    drawText(SCREEN_WIDTH/2 - 8 * GLYPH_W, SCREEN_HEIGHT/2 - 60, 255, 255, 255, "ARENASHOOTER v1.0");
-    drawText(SCREEN_WIDTH/2 - 8 * GLYPH_W, SCREEN_HEIGHT/2 - 30, 255, 255, 255, "HIGHSCORE:%05d", highscore);
-    if (textBlink < 30) drawText(SCREEN_WIDTH / 2 - 8 * GLYPH_W, SCREEN_HEIGHT / 2, 255, 255, 255, "PRESS W TO START");
+static void draw(void) {
+    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 100, 255, 255, 255, 1, "ARENASHOOTER v1.0");
+    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 50, 255, 255, 255, 1,"HIGHSCORE:%05d", highscore);
+    if (textBlink < 30) drawText(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 100, 255, 255, 255, 1, "PRESS W TO START");
 }

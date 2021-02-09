@@ -7,10 +7,10 @@ static SDL_Texture *fontTexture;
 static char drawTextBuffer[MAX_LINE_LENGTH];
 
 void initFonts(void) {
-	fontTexture = loadTexture("resources/fontPixelLine.png");
+	fontTexture = loadTexture("resources/fontBiggerRGBA.png");
 }
 
-void drawText(int x, int y, int r, int g, int b, char *format, ...) {
+void drawText(int x, int y, int r, int g, int b, int center, char *format, ...) {
 	int i, len, c;
 	SDL_Rect rect;
 	va_list args;
@@ -20,9 +20,9 @@ void drawText(int x, int y, int r, int g, int b, char *format, ...) {
 	va_start(args, format);
 	vsprintf(drawTextBuffer, format, args);
 	va_end(args);
-	
 	len = strlen(drawTextBuffer);
-	rect.w = GLYPH_W;
+    if (center) x -= GLYPH_W * len / 2;
+    rect.w = GLYPH_W;
 	rect.h = GLYPH_H;
 	rect.y = 0;
 	
@@ -30,9 +30,8 @@ void drawText(int x, int y, int r, int g, int b, char *format, ...) {
 	
 	for (i = 0 ; i < len ; i++) {
 		c = drawTextBuffer[i];
-		if (c >= ' ' && c <= 'z') {
+		if (c >= ' ' && c <= 'Z') {
 			rect.x = (c - ' ') * GLYPH_W;
-			
 			blitRect(fontTexture, &rect, x, y);
 			x += GLYPH_W;
 		}

@@ -9,15 +9,15 @@ extern SDL_Texture *loadTexture(char *filename);
 //player weapons
 extern void fireDefaultGun(void);
 extern void fireFastGun(void);
+extern void fireTripleGun(void);
 extern void fireSlowGun(void);
-extern void fireTripleShot(void);
-extern void fireQuadShot(void);
 //enemy weapons
 extern void shooterShot(void);
 extern void crossShooterShot(void);
 extern void lineShooterShot(void);
 extern void sniperShot(void);
-
+extern void multiShooterShot(void);
+extern void starShooterShot(void);
 extern void playSound(int id, int channel);
 
 extern App app;
@@ -56,17 +56,17 @@ void doBullets(void) {
 static void bulletHitEntity(Entity *b) {
 	Entity *e;
 	int distance;
-
 	for (e = stage.entityHead.next; e != NULL; e = e->next) {
 		if (e->side != SIDE_NEUTRAL && e->side != b->side) {
 			distance = getDistance(e->x, e->y, b->x, b->y);
 			if (distance * 2 < e->h + b->h) {
-			    if(e->side == SIDE_ENEMY) {
-                    e->x += b->dx * 2; //knockback
-                    e->y += b->dy * 2;
+			    if(player != NULL && e->side == SIDE_ENEMY && (player->weapon == fireDefaultGun || player->weapon == fireSlowGun)) {
+                   e->x += b->dx; //knockback
+                   e->y += b->dy;
                 }
 			    if(e->side == SIDE_PLAYER) playSound(PLAYER_HIT, CH_PLAYER);
-				b->health = 0;
+                e->hit = 4; //for flashing white sprite
+			    b->health = 0;
 				e->health -= b->damage;
 				return;
 			}
@@ -82,51 +82,8 @@ void drawBullets(void) {
 	}
 }
 
-void firePlayerBullet(void) {
-
-    switch(player->weapon) {
-        case(FAST_GUN):
-            fireFastGun();
-            break;
-        case(SLOW_GUN):
-            fireSlowGun();
-            break;
-        case(TRIPLE_SHOT):
-            fireTripleShot();
-            break;
-        case(QUAD_SHOT):
-            fireQuadShot();
-            break;
-        default:
-            fireDefaultGun();
-            break;
-    }
-    playSound(PLAYER_FIRE, CH_PLAYER);
-
-}
-
-void fireEnemyBullet(void) {
-    switch(self->weapon) {
-        case(SHOOTER):
-            shooterShot();
-            break;
-        case(CROSS_SHOOTER):
-            crossShooterShot();
-            break;
-        case(LINE_SHOOTER):
-            lineShooterShot();
-            break;
-        case(SNIPER):
-            sniperShot();
-            break;
-        default:
-            break;
-    }
-}
-
 Entity *createBullet(Entity *shooter) {
     Entity *b;
-
     b = malloc(sizeof(Entity));
     memset(b, 0, sizeof(Entity));
     stage.bulletTail->next = b;
@@ -140,10 +97,6 @@ Entity *createBullet(Entity *shooter) {
     b->angle = shooter->angle;
     b->side = shooter->side;
     SDL_QueryTexture(b->texture, NULL, NULL, &b->w, &b->h);
-    b->color.r = shooter->color.r; //TODO: remove when there are proper sprites
-    b->color.g = shooter->color.g;
-    b->color.b = shooter->color.b;
-    b->color.a = 255;
-
+    b->color = shooter->color;
     return b;
 }
