@@ -23,6 +23,7 @@ void initSDL(void) {
     app.volumeMusic = 30;
     app.volumeSounds = 50;
     Mix_Volume(CH_ANY, app.volumeSounds);
+    Mix_Volume(CH_PLAYER, app.volumeSounds + 20);
     Mix_VolumeMusic(app.volumeMusic);
     SDL_DisplayMode dm;
     if (SDL_GetDesktopDisplayMode(0, &dm) < 0) {

@@ -12,9 +12,8 @@ extern SDL_Texture *loadTexture(char *filename);
 extern App app;
 extern Entity *player;
 extern Stage stage;
-extern Entity *boss;
 
-extern void spawnBossShooter(void);
-extern void spawnBossSpawner(void);
-extern void spawnBossSpin(void);
+extern Entity *spawnBossShooter(void);
+extern Entity *spawnBossSpawner(void);
+extern Entity *spawnBossSpin(void);
 extern void spawnBossSplit(void);

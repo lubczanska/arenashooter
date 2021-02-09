@@ -23,7 +23,7 @@ void loadMusic(char *filename) {
 }
 
 static void loadSounds(void) {
-    sounds[PLAYER_FIRE] = Mix_LoadWAV("sounds/player_shot.wav");
+    sounds[ENEMY_HIT] = Mix_LoadWAV("sounds/laser_shot.wav");
     sounds[PLAYER_HIT] = Mix_LoadWAV("sounds/player_hit.wav");
     sounds[POWERUP] = Mix_LoadWAV("sounds/item_pick.wav");
     SDL_LogMessage(SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_INFO, "loaded sounds");

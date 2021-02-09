@@ -40,6 +40,7 @@ static void bulletHitEntity(Entity *b) {
                    e->y += b->dy;
                 }
 			    if(e->side == SIDE_PLAYER) playSound(PLAYER_HIT, CH_PLAYER);
+			    else playSound(ENEMY_HIT, CH_ENEMY);
                 e->hit = 4; //for flashing white sprite
 			    b->health = 0;
 				e->health -= b->damage;

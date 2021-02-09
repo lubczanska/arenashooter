@@ -47,6 +47,7 @@ static void logic(void) {
 
 static void changeVolume(void) {
     Mix_Volume(CH_ANY, app.volumeSounds);
+    Mix_Volume(CH_PLAYER, app.volumeSounds + 20);
     Mix_VolumeMusic(app.volumeMusic);
     playSound(POWERUP, CH_ITEM);
 }

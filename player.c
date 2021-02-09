@@ -13,6 +13,7 @@ static void die(void) {
 
 static void enemyTouch(Entity *other) { //touching enemies inflicts damage
     if (other->side >= SIDE_ENEMY) {
+        playSound(PLAYER_HIT, CH_PLAYER);
         player->hit = 4;
         player->health--;
     }
@@ -50,10 +51,6 @@ void doPlayer(void) {
 		if (app.keyboard[SDL_SCANCODE_S]) player->dy = 1;
 		if (app.keyboard[SDL_SCANCODE_A]) player->dx = -1;
 		if (app.keyboard[SDL_SCANCODE_D]) player->dx = 1;
-        if (app.keyboard[SDL_SCANCODE_0]) player->weapon = fireDefaultGun; //just for testing
-        if (app.keyboard[SDL_SCANCODE_1]) player->weapon = fireFastGun;
-        if (app.keyboard[SDL_SCANCODE_3]) player->weapon = fireTripleGun;
-        if (app.keyboard[SDL_SCANCODE_4]) player->weapon = fireSlowGun;
         if (app.keyboard[SDL_SCANCODE_SPACE]) {
             SDL_Delay(100);
             stage.pause = 1;

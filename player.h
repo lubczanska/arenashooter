@@ -12,3 +12,4 @@ extern void fireFastGun(void);
 extern void fireTripleGun(void);
 extern void fireSlowGun(void);
 extern void addPlayerDeathEffect(void);
+extern void playSound(int id, int channel);

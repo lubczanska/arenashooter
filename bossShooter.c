@@ -1,37 +1,37 @@
 #include "bossClasses.h"
 
-Entity *boss;
-
 static void bossShooterTick(void);
 
-void spawnBossShooter(void) {
-    boss = malloc(sizeof(Entity));
-    memset(boss, 0, sizeof(Entity));
-    stage.entityTail->next = boss;
-    stage.entityTail = boss;
+Entity *spawnBossShooter(void) {
+    Entity *e;
+    e = malloc(sizeof(Entity));
+    memset(e, 0, sizeof(Entity));
+    stage.entityTail->next = e;
+    stage.entityTail = e;
 
-    boss->health = 30 + (stage.wave % 5) * 5;
-    boss->tick = bossShooterTick;
-    boss->die = bossDie;
-    boss->speed = 5;
-    boss->side = SIDE_BOSS;
-    boss->x = SCREEN_WIDTH / 2;
-    boss->y = SCREEN_HEIGHT / 2;
-    boss->texture = bossTexture[B_SHOOTER];
-    SDL_QueryTexture(boss->texture, NULL, NULL, &boss->w, &boss->h);
-    boss->color.r = 255;
-    boss->color.g = 20;
-    boss->color.b = 60;
-    boss->color.a = 255;
+    e->health = 30 + (stage.wave % 5) * 5;
+    e->tick = bossShooterTick;
+    e->die = bossDie;
+    e->speed = 5;
+    e->side = SIDE_BOSS;
+    e->x = SCREEN_WIDTH / 2;
+    e->y = SCREEN_HEIGHT / 2;
+    e->texture = bossTexture[B_SHOOTER];
+    SDL_QueryTexture(e->texture, NULL, NULL, &e->w, &e->h);
+    e->color.r = 255;
+    e->color.g = 20;
+    e->color.b = 60;
+    e->color.a = 255;
+    return e;
 }
 
 static void bossShooterTick(void) {
     if (player != NULL) {
-        boss->angle = getAngle(boss->x, boss->y, player->x, player->y);
-        getSlope(player->x, player->y, boss->x, boss->y, &boss->dx, &boss->dy);
-        if (boss->reload <= 0) {
+        self->angle = getAngle(self->x, self->y, player->x, player->y);
+        getSlope(player->x, player->y, self->x, self->y, &self->dx, &self->dy);
+        if (self->reload <= 0) {
             shooterShot();
-            boss->reload = 6;
+            self->reload = 6;
         }
     }
 }

@@ -6,7 +6,7 @@ SDL_Texture *bossTexture[6];
 
 static void initBossBar(void);
 void bossDie(void);
-
+Entity *boss;
 int bossMaxHealth;
 int bossBarX;
 
@@ -22,7 +22,7 @@ void initBosses(void) {
 void spawnBoss(void) {
     switch(rand() % 4) {
         case 0:
-            spawnBossShooter();
+            boss = spawnBossShooter();
             bossMaxHealth = boss->health;
             bossBarX = (SCREEN_WIDTH - (bossMaxHealth * BOSS_BAR_GLYPH)) / 2;
             break;
@@ -30,12 +30,12 @@ void spawnBoss(void) {
             spawnBossSplit();
             break;
         case 2:
-            spawnBossSpin();
+            boss = spawnBossSpin();
             bossMaxHealth = boss->health;
             bossBarX = (SCREEN_WIDTH - (bossMaxHealth * BOSS_BAR_GLYPH)) / 2;
             break;
         default:
-            spawnBossSpawner();
+            boss = spawnBossSpawner();
             bossMaxHealth = boss->health;
             bossBarX = (SCREEN_WIDTH - (bossMaxHealth * BOSS_BAR_GLYPH)) / 2;
             break;

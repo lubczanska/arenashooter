@@ -55,8 +55,8 @@ enum bosses {
 };
 
 enum sounds {
-    PLAYER_FIRE,
     PLAYER_HIT,
+    ENEMY_HIT,
     POWERUP
 };
 

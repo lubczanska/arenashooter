@@ -1,50 +1,49 @@
 #include "bossClasses.h"
 
-Entity *boss;
-
 static void bossSpawnerTick1(void);
 static void bossSpawnerTick2(void);
 
 void spawnBossSpawner(void) {
-    boss = malloc(sizeof(Entity));
-    memset(boss, 0, sizeof(Entity));
-    stage.entityTail->next = boss;
-    stage.entityTail = boss;
+    Entity *e;
+    e = malloc(sizeof(Entity));
+    memset(e, 0, sizeof(Entity));
+    stage.entityTail->next = e;
+    stage.entityTail = e;
 
-    boss->health = 40 + (stage.wave % 5) * 10;
-    if (stage.wave >= 10) boss->tick = bossSpawnerTick2;
-    else boss->tick = bossSpawnerTick1;
-    boss->die = bossDie;
-    boss->side = SIDE_BOSS;
-    boss->speed = 1;
-    boss->x = SCREEN_WIDTH / 2;
-    boss->y = SCREEN_HEIGHT / 2;
-    boss->texture = bossTexture[B_SPAWNER];
-    SDL_QueryTexture(boss->texture, NULL, NULL, &boss->w, &boss->h);
-    boss->color.r = 119;
-    boss->color.g = 22;
-    boss->color.b = 245;
-    boss->color.a = 255;
+    e->health = 40 + (stage.wave % 5) * 10;
+    if (stage.wave >= 10) e->tick = bossSpawnerTick2;
+    else e->tick = bossSpawnerTick1;
+    e->die = bossDie;
+    e->side = SIDE_BOSS;
+    e->speed = 1;
+    e->x = SCREEN_WIDTH / 2;
+    e->y = SCREEN_HEIGHT / 2;
+    e->texture = bossTexture[B_SPAWNER];
+    SDL_QueryTexture(e->texture, NULL, NULL, &e->w, &e->h);
+    e->color.r = 119;
+    e->color.g = 22;
+    e->color.b = 245;
+    e->color.a = 255;
 }
 
 static void bossSpawnerTick1(void) {
     if (player != NULL) {
-        boss->angle = getAngle(boss->x, boss->y, player->x, player->y);
-        getSlope(player->x, player->y, boss->x, boss->y, &boss->dx, &boss->dy);
-        if (boss->reload <= 0) {
-            spawnRunner(boss->x, boss->y);
-            boss->reload = FPS - 10;
+        self->angle = getAngle(self->x, self->y, player->x, player->y);
+        getSlope(player->x, player->y, self->x, self->y, &self->dx, &self->dy);
+        if (self->reload <= 0) {
+            spawnRunner(self->x, self->y);
+            self->reload = FPS - 10;
         }
     }
 }
 
 static void bossSpawnerTick2(void) {
     if (player != NULL) {
-        boss->angle = getAngle(boss->x, boss->y, player->x, player->y);
-        getSlope(player->x, player->y, boss->x, boss->y, &boss->dx, &boss->dy);
-        if (boss->reload <= 0) {
-            spawnShooter(boss->x, boss->y);
-            boss->reload = FPS;
+        self->angle = getAngle(self->x, self->y, player->x, player->y);
+        getSlope(player->x, player->y, self->x, self->y, &self->dx, &self->dy);
+        if (self->reload <= 0) {
+            spawnShooter(self->x, self->y);
+            self->reload = FPS;
         }
     }
 }
