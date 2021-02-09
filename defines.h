@@ -7,8 +7,10 @@
 #define PLAYER_SPEED 6
 #define PLAYER_RELOAD 12
 
-#define SCREEN_WIDTH   1920
-#define SCREEN_HEIGHT  1080
+//#define SCREEN_WIDTH   1920
+//#define SCREEN_HEIGHT  1080
+extern int SCREEN_WIDTH;
+extern int SCREEN_HEIGHT;
 
 #define FPS 60
 
@@ -21,7 +23,7 @@
 #define MAX_LINE_LENGTH 1024
 #define MAX_CHANNELS 16
 
-#define HELP_PAGES 4
+#define HELP_PAGES 6
 
 enum sides{
 	SIDE_NEUTRAL,
@@ -74,20 +76,5 @@ enum wave {
     BOSS_END
 };
 
-enum prompts {
-    ENEMIES_1,
-    ITEMS,
-    ENEMIES_2,
-    BOSS_1,
-    ITEMS_BOSS,
-    ENEMIES_3,
-    ENEMIES_4,
-    BOSS_2,
-    ENEMIES_5,
-    BOSS_3,
-    BOSS_4
-};
-
-
-#define BOSS_BAR_GLYPH 12
+#define BOSS_BAR_GLYPH 12 //for drawing health bars
 #define PLAYER_BAR_GLYPH 8

@@ -4,7 +4,7 @@ project(arenashooter C)
 find_package(SDL2 REQUIRED)
 include_directories(arenashooter ${SDL2_INCLUDE_DIRS})
 
-add_executable(arenashooter main.c draw.c init.c keyboard.c stage.c common.h defines.h structs.h entities.c player.c util.c text.c bullets.c enemies.c items.c title.c playerweapons.c sound.c enemyweapons.c bosses.c bossSplit.c bossSpawner.c bossShooter.c effects.c bossSpin.c enemyShooter.c enemySniper.c enemyLineShooter.c enemyMultiShooter.c enemyCrossShooter.c enemyStarShooter.c enemySlowMultiShooter.c enemySlug.c help.c settings.c prompts.c)
+add_executable(arenashooter main.c draw.c init.c input.c stage.c common.h defines.h structs.h entities.c player.c util.c text.c bullets.c enemies.c items.c title.c playerweapons.c sound.c enemyweapons.c bosses.c bossSplit.c bossSpawner.c bossShooter.c effects.c bossSpin.c enemyShooter.c enemySniper.c enemyLineShooter.c enemyMultiShooter.c enemyCrossShooter.c enemyStarShooter.c enemySlowMultiShooter.c enemySlug.c help.c settings.c prompts.c bosses.h bossClasses.h bullets.h effects.h enemies.h enemyClasses.h entities.h init.h items.h player.h playerweapons.h title.h stage.h colors.c enemyRunner.c enemyRammer.c)
 target_link_libraries(arenashooter ${SDL2_LIBRARIES})
 
 INCLUDE(FindPkgConfig)

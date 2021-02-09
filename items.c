@@ -1,10 +1,4 @@
-#include "common.h"
-
-extern SDL_Texture *loadTexture(char *filename);
-extern void playSound(int id, int channel);
-extern Entity *player;
-extern Entity *self;
-extern Stage stage;
+#include "items.h"
 
 static void addHealthPowerup(int x, int y);
 static void addMaxHealthPowerup(int x, int y);
@@ -162,8 +156,8 @@ static void addTripleGunPowerup(int x, int y) {
     e = createPowerup(x, y);
     e->texture = powerupWeaponTexture[2];
     e->color.r = 255;
-    e->color.g = 0;
-    e->color.b = 0;
+    e->color.g = 255;
+    e->color.b = 255;
     e->color.a = 255;
     e->weapon = fireTripleGun;
     e->touch = weaponTouch;
@@ -173,9 +167,9 @@ static void addSlowGunPowerup(int x, int y) {
     Entity *e;
     e = createPowerup(x, y);
     e->texture = powerupWeaponTexture[3];
-    e->color.r = 0;
+    e->color.r = 255;
     e->color.g = 255;
-    e->color.b = 0;
+    e->color.b = 255;
     e->color.a = 255;
     e->weapon = fireSlowGun;
     e->touch = weaponTouch;

@@ -1,24 +1,9 @@
-#include "common.h"
+#include "bossClasses.h"
 
-extern void blit(SDL_Texture *texture, int x, int y, int center);
-extern void fireEnemyBullet(void);
-extern float getAngle(int x1, int y1, int x2, int y2);
-extern void getSlope(int x1, int y1, int x2, int y2, float *dx, float *dy);
-extern void addEnemyDeathEffect(Entity *e);
 static void bossSplitTick(void);
 static void bossSplitDie0(void);
 static void bossSplitDie1(void);
 static void bossSplitDie2(void);
-extern SDL_Texture *loadTexture(char *filename);
-static SDL_Texture *bossTexture[6];
-
-extern void bossDie(void);
-extern App app;
-extern Entity *player;
-extern Stage stage;
-extern Entity *self;
-extern int bossMaxHealth;
-extern int bossBarX;
 
 void spawnBossSplit(void) {
     Entity* e;
@@ -39,8 +24,8 @@ void spawnBossSplit(void) {
     e->dy = (1 + (rand() % 99)) * 0.01;
     e->texture = bossTexture[B_SPLIT_0];
     SDL_QueryTexture(e->texture, NULL, NULL, &e->w, &e->h);
-    e->color.r = 255;
-    e->color.g = 255;
+    e->color.r = 33;
+    e->color.g = 120;
     e->color.b = 255;
     e->color.a = 255;
     bossMaxHealth = e->health;
@@ -77,10 +62,7 @@ static void bossSplitDie0(void) {
         e->dy = (1 + ((rand() + i*i) % 99)) * 0.01;
         e->texture = bossTexture[B_SPLIT_1];
         SDL_QueryTexture(e->texture, NULL, NULL, &e->w, &e->h);
-        e->color.r = 0;
-        e->color.g = 255;
-        e->color.b = 255;
-        e->color.a = 255;
+        e->color = self->color;
         bossMaxHealth += e->health;
     }
     bossBarX = (SCREEN_WIDTH - (bossMaxHealth * BOSS_BAR_GLYPH)) / 2;
@@ -108,10 +90,7 @@ static void bossSplitDie1(void) {
         e->dy = (1 + ((rand() + i*i) % 99)) * 0.01;
         e->texture = bossTexture[B_SPLIT_2];
         SDL_QueryTexture(e->texture, NULL, NULL, &e->w, &e->h);
-        e->color.r = 255;
-        e->color.g = 0;
-        e->color.b = 255;
-        e->color.a = 255;
+        e->color = self->color;
         bossMaxHealth += e->health;
     }
     bossBarX = (SCREEN_WIDTH - (bossMaxHealth * BOSS_BAR_GLYPH)) / 2;

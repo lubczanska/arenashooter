@@ -1,59 +1,19 @@
-#include "common.h"
-
-extern void addPowerup(int x, int y);
-extern void addPowerupBoss(void);
-extern void addPlayer(void);
-extern void blit(SDL_Texture *texture, int x, int y, int center);
-extern void doBullets(void);
-extern void doEntities(void);
-extern void doEffects(void);
-extern void doPlayer(void);
-extern void drawBullets(void);
-extern void drawEntities(void);
-extern void drawEffects(void);
-extern void drawText(int x, int y, int r, int g, int b, int center, char *format, ...);
-extern int getDistance(int x1, int y1, int x2, int y2);
-extern SDL_Texture *loadTexture(char *filename);
-static SDL_Texture *playerHBFullTexture;
-static SDL_Texture *playerHBEmptyTexture;
-static void initPlayerHealthBar(void);
-
-extern App app;
-extern Entity *player;
-extern Stage stage;
-extern int highscore;
-
+#include "stage.h"
 
 static void logic(void);
 static void draw(void);
-static void drawStats(void);
 static void doWave(void);
-static void spawnEnemy(void);
 static void doPause(void);
-static void drawPause(void);
 static void resetStage(void);
+static void spawnEnemy(void);
+static void drawStats(void);
+static void drawPause(void);
 static void drawGameOver(void);
 extern void initTitle(void);
-
-extern void drawBossBar(void);
-
-extern void spawnShooter(int x, int y);
-extern void spawnCrossShooter(int x, int y);
-extern void spawnLineShooter(int x, int y);
-extern void spawnMultiShooter(int x, int y);
-extern void spawnSlowMultiShooter(int x, int y);
-extern void spawnStarShooter(int x, int y);
-extern void spawnRunner(int x, int y);
-extern void spawnRammer(int x, int y);
-extern void spawnSniper(int x, int y);
-extern void spawnSlug(int x, int y);
-
-extern void spawnBoss(void);
-
-extern int prompts[11][2];
-extern int nextPrompt;
-extern void displayPrompt(int index);
+static void initPlayerHealthBar(void);
 static SDL_Texture *cursorTexture;
+static SDL_Texture *playerHBFullTexture;
+static SDL_Texture *playerHBEmptyTexture;
 static int enemySpawnTimer;
 static int playerDeathTimer;
 
@@ -116,6 +76,12 @@ static void doPause(void) {
         SDL_Delay(200);
         stage.pause = 0;
     }
+    if (app.keyboard[SDL_SCANCODE_BACKSPACE]) {
+        SDL_Delay(200);
+        player = NULL;
+        initTitle();
+    }
+
     if (app.keyboard[SDL_SCANCODE_ESCAPE]) exit(0);
 }
 
@@ -132,11 +98,6 @@ static void doWave(void) {
         Entity *e;
         for (e = stage.entityHead.next; e != NULL; e = e->next) {
             if (e->side == SIDE_NEUTRAL) e->health = 0; //destroy the other item on boss defeat
-        }
-        if (stage.score >= prompts[nextPrompt][1] && prompts[nextPrompt][0] == 0) {
-            displayPrompt(nextPrompt);
-            prompts[nextPrompt][0] = 1;
-            ++nextPrompt;
         }
         stage.waveState = NEW_BEGIN;
     }
@@ -157,7 +118,6 @@ static void doWave(void) {
         spawnEnemy();
     }
 }
-
 
 static void spawnEnemy(void) {
 	int x, y;
@@ -183,16 +143,20 @@ static void spawnEnemy(void) {
                 x = rand() % SCREEN_WIDTH;
                 y = SCREEN_HEIGHT + 100;
                 break;
-        }
-        switch (rand() % 10) {
+        } //what enemies to spawn
+        int r = rand();
+        if (stage.wave <= 5) r %= 3;
+        else if (stage.wave <= 10) r %= 6;
+        else r = r % 9 + 1;
+        switch (r) {
             case 0:
-                spawnShooter(x, y);
+                spawnLineShooter(x, y);
                 break;
             case 1:
-                spawnSniper(x, y);
+                spawnShooter(x, y);
                 break;
             case 2:
-                spawnLineShooter(x, y);
+                spawnRunner(x, y);
                 break;
             case 3:
                 spawnRammer(x, y);
@@ -201,19 +165,19 @@ static void spawnEnemy(void) {
                 spawnMultiShooter(x, y);
                 break;
             case 5:
-                spawnStarShooter(x, y);
-                break;
-            case 6:
                 spawnCrossShooter(x, y);
                 break;
-            case 7:
+            case 6:
                 spawnSlowMultiShooter(x, y);
+                break;
+            case 7:
+                spawnStarShooter(x, y);
                 break;
             case 8:
                 spawnSlug(x, y);
                 break;
-            default:
-                spawnRunner(x, y);
+            case 9:
+                spawnSniper(x, y);
                 break;
         }
         enemySpawnTimer = MAX(FPS - stage.wave, 20);
@@ -250,7 +214,6 @@ static void drawPlayerHealthBar(void) {
         blit(playerHBEmptyTexture, x, 30, 1);
         x += PLAYER_BAR_GLYPH;
     }
-
 }
 
 static void dimScreen(void) {
@@ -264,8 +227,9 @@ static void dimScreen(void) {
 static void drawPause(void) {
     dimScreen();
     drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 100, 255, 255, 255, 1,  "PAUSE");
-    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 200, 255, 255, 255, 1,  "PRESS SPACE TO RESUME");
-    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 250, 255, 255, 255, 1, "PRESS ESC TO QUIT");
+    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 50, 255, 255, 255, 1,  "press SPACE to resume");
+    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 300, 255, 255, 255, 1, "ESC - quit");
+    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 + 350, 255, 255, 255, 1, "BACKSPACE - return to title screen");
 }
 
 static void drawGameOver(void) {
@@ -275,6 +239,6 @@ static void drawGameOver(void) {
 
 static void drawStats(void) {
 	drawPlayerHealthBar();
-	drawText(SCREEN_WIDTH/2, 20, 255, 255, 255, 1, "%d", stage.score);
-    drawText(SCREEN_WIDTH - 200, 10, 255, 255, 255, 0,  "WAVE %02d", stage.wave);
+	drawText(SCREEN_WIDTH/2, 15, 255, 255, 255, 1, "%d", stage.score);
+    drawText(SCREEN_WIDTH - 200, 10, 255, 255, 255, 0,  "wave %02d", stage.wave);
 }

@@ -1,25 +1,8 @@
-#include "common.h"
+#include "enemyClasses.h"
 
-extern void addPowerup(int x, int y);
-extern void getSlope(int x1, int y1, int x2, int y2, float *dx, float *dy);
-extern void fireEnemyBullet(void);
-extern float getAngle(int x1, int y1, int x2, int y2);
-extern void angledSlope(int x1, int y1, int x2, int y2, float angle, float *dx, float *dy);
-extern int getDistance(int x1, int y1, int x2, int y2);
-void blitRotated(SDL_Texture *texture, int x, int y, float angle);
-extern Entity *createBullet(Entity *shooter);
-extern SDL_Texture *loadTexture(char *filename);
-
-extern Entity *player;
-extern Entity *self;
-extern Stage stage;
-
-extern SDL_Texture *enemyTexture[10];
-
-extern void initEnemies(void);
 static void tickSlowMultiShooter(void);
 void slowMultiShooterShot(void);
-extern void enemyDie(void);
+
 
 void spawnSlowMultiShooter(int x, int y) {
     Entity *e;
@@ -34,7 +17,7 @@ void spawnSlowMultiShooter(int x, int y) {
     e->y = y;
     e->weapon = slowMultiShooterShot;
     e->texture = enemyTexture[SLOW_MULTI_SHOOTER];
-    e->speed = MIN(3 + (stage.wave * 0.1), 7); //wave difficulty modificator
+    e->speed = MIN(3 + (stage.wave % 5), 7); //wave difficulty modificator
     e->tick = tickSlowMultiShooter;
     e->health = 8;
     e->reload = FPS;

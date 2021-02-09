@@ -1,12 +1,4 @@
-#include "common.h"
-
-extern void drawText(int x, int y, int r, int g, int b, int center, char *format, ...);
-extern void initStage(void);
-extern void initHelp(void);
-extern void initSettings(void);
-
-extern App app;
-extern int highscore;
+#include "title.h"
 
 static void logic(void);
 static void draw(void);
@@ -31,7 +23,10 @@ static void logic(void) {
 }
 
 static void draw(void) {
-    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 100, 255, 255, 255, 1, "ARENASHOOTER v1.0");
-    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 50, 255, 255, 255, 1,"HIGHSCORE:%05d", highscore);
-    if (textBlink < 30) drawText(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 100, 255, 255, 255, 1, "PRESS W TO START");
+    drawText(200, SCREEN_HEIGHT - 100, 255, 255, 255, 1, "ESC - quit");
+    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT - 100, 255, 255, 255, 1, "S - settings");
+    drawText(SCREEN_WIDTH - 200, SCREEN_HEIGHT - 100, 255, 255, 255, 1, "H - help");
+    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 200, 255, 255, 255, 1, "arenashooter v1.0");
+    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT/2 - 100, 255, 255, 255, 1,"HIGHSCORE %05d", highscore);
+    if (textBlink < 30) drawText(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 100, 255, 255, 255, 1, "press W to start");
 }

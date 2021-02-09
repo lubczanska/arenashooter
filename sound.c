@@ -4,7 +4,6 @@
 
 static void loadSounds(void);
 
-
 static Mix_Chunk *sounds[MAX_CHANNELS];
 static Mix_Music *music;
 

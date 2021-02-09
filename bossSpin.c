@@ -1,20 +1,5 @@
-#include "common.h"
+#include "bossClasses.h"
 
-extern void blit(SDL_Texture *texture, int x, int y, int center);
-extern void fireEnemyBullet(void);
-extern float getAngle(int x1, int y1, int x2, int y2);
-extern void getSlope(int x1, int y1, int x2, int y2, float *dx, float *dy);
-extern void spawnShooter(int x, int y);
-extern void spawnRunner(int x, int y);
-extern SDL_Texture *loadTexture(char *filename);
-extern SDL_Texture *bossTexture[6];
-extern void angledSlope(int x1, int y1, int x2, int y2, float angle, float *dx, float *dy);
-extern void bossDie(void);
-extern Entity *createBullet(Entity *shooter);
-
-extern App app;
-extern Entity *player;
-extern Stage stage;
 Entity *boss;
 int attackTimer;
 
@@ -30,7 +15,7 @@ void spawnBossSpin(void) {
     stage.entityTail->next = boss;
     stage.entityTail = boss;
 
-    boss->health = 40;
+    boss->health = 40 + (stage.wave % 5) * 10;
     boss->tick = bossSpinTick;
     boss->die = bossDie;
     boss->side = SIDE_BOSS;

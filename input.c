@@ -1,5 +1,3 @@
-//delete mouse once unnecessary
-
 #include "common.h"
 
 extern App app;
@@ -20,8 +18,7 @@ void doMouseButtonDown(SDL_MouseButtonEvent *event) {
     app.mouse.button[event->button] = 1;
 }
 
-void doInput(void)
-{
+void doInput(void) {
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {

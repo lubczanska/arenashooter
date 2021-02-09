@@ -1,19 +1,8 @@
-#include "common.h"
+#include "bossClasses.h"
 
-extern void blit(SDL_Texture *texture, int x, int y, int center);
-extern void fireEnemyBullet(void);
-extern float getAngle(int x1, int y1, int x2, int y2);
-extern void getSlope(int x1, int y1, int x2, int y2, float *dx, float *dy);
-static void bossShooterTick(void);
-extern SDL_Texture *loadTexture(char *filename);
-extern SDL_Texture *bossTexture[6];
-
-extern void bossDie(void);
-extern void shooterShot(void);
-extern App app;
-extern Entity *player;
-extern Stage stage;
 Entity *boss;
+
+static void bossShooterTick(void);
 
 void spawnBossShooter(void) {
     boss = malloc(sizeof(Entity));
@@ -21,7 +10,7 @@ void spawnBossShooter(void) {
     stage.entityTail->next = boss;
     stage.entityTail = boss;
 
-    boss->health = 30;
+    boss->health = 30 + (stage.wave % 5) * 5;
     boss->tick = bossShooterTick;
     boss->die = bossDie;
     boss->speed = 5;
@@ -31,8 +20,8 @@ void spawnBossShooter(void) {
     boss->texture = bossTexture[B_SHOOTER];
     SDL_QueryTexture(boss->texture, NULL, NULL, &boss->w, &boss->h);
     boss->color.r = 255;
-    boss->color.g = 255;
-    boss->color.b = 255;
+    boss->color.g = 20;
+    boss->color.b = 60;
     boss->color.a = 255;
 }
 
@@ -42,7 +31,7 @@ static void bossShooterTick(void) {
         getSlope(player->x, player->y, boss->x, boss->y, &boss->dx, &boss->dy);
         if (boss->reload <= 0) {
             shooterShot();
-            boss->reload = 8;
+            boss->reload = 6;
         }
     }
 }

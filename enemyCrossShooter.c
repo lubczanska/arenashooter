@@ -1,26 +1,7 @@
-#include "common.h"
+#include "enemyClasses.h"
 
-extern void addPowerup(int x, int y);
-extern void getSlope(int x1, int y1, int x2, int y2, float *dx, float *dy);
-extern void angledSlope(int x1, int y1, int x2, int y2, float angle, float *dx, float *dy);
-extern void fireEnemyBullet(void);
-extern float getAngle(int x1, int y1, int x2, int y2);
-extern int getDistance(int x1, int y1, int x2, int y2);
-void blitRotated(SDL_Texture *texture, int x, int y, float angle);
-extern Entity *createBullet(Entity *shooter);
-extern SDL_Texture *loadTexture(char *filename);
-
-extern Entity *player;
-extern Entity *self;
-extern Stage stage;
-
-extern SDL_Texture *enemyTexture[10];
-
-extern void initEnemies(void);
 static void tickCrossShooter(void);
-static void tickCrossShooterSpin(void);
 void crossShooterShot(void);
-extern void enemyDie(void);
 
 void spawnCrossShooter(int x, int y) {
     Entity *e;
@@ -36,8 +17,7 @@ void spawnCrossShooter(int x, int y) {
     e->y = 250 + (rand() % 800);
     e->weapon = crossShooterShot;
     e->texture = enemyTexture[CROSS_SHOOTER];
-    if (stage.wave > 5) e->tick = tickCrossShooter;
-    else e->tick = tickCrossShooterSpin;
+    e->tick = tickCrossShooter;
     e->health = 10;
     SDL_QueryTexture(e->texture, NULL, NULL, &e->w, &e->h);
     e->color.r = 119;
@@ -47,21 +27,13 @@ void spawnCrossShooter(int x, int y) {
     e->die = enemyDie;
 }
 
-static void tickCrossShooter(void) {
-    if (player != NULL) {
-        if (self->reload <= 0) {
-            crossShooterShot();
-            self->reload = 30;
-        }
-    }
-}
 
-static void tickCrossShooterSpin(void) {
+static void tickCrossShooter(void) {
     if (player != NULL) {
         self->angle = (self->angle + 1) % 360;
         if (self->reload <= 0) {
             crossShooterShot();
-            self->reload = 20;
+            self->reload = MAX(20 - (stage.wave * 0.1), 16);
         }
     }
 }

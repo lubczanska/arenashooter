@@ -4,13 +4,12 @@
 
 extern void drawText(int x, int y, int r, int g, int b, int center, char *format, ...);
 extern void initTitle(void);
-
+extern void playSound(int id, int channel);
 extern App app;
+
 static void logic(void);
 static void draw(void);
 static void changeVolume(void);
-extern void playSound(int id, int channel);
-
 static int activeField;
 static int *settingFields[2];
 
@@ -53,6 +52,10 @@ static void changeVolume(void) {
 }
 
 static void draw(void) {
+    drawText(SCREEN_WIDTH/2, 100, 255, 255, 255, 1, "SETTINGS");
+    drawText(SCREEN_WIDTH/2, 150, 255, 255, 255, 1, "W,S - select");
+    drawText(SCREEN_WIDTH/2, 200, 255, 255, 255, 1, "<< A   D >>");
+    drawText(SCREEN_WIDTH/2, SCREEN_HEIGHT - 100, 255, 255, 255, 1, "BACKSPACE - return to menu");
     for (int i = 0; i < 2; i++) {
         drawText(500, SCREEN_HEIGHT / 2, 255, 255, 255, 1, "MUSIC VOLUME");
         drawText(500, SCREEN_HEIGHT / 2 + 100, 255, 255, 255, 1, "SOUNDS VOLUME");

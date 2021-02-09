@@ -1,19 +1,5 @@
-#include "common.h"
+#include "bossClasses.h"
 
-extern void blit(SDL_Texture *texture, int x, int y, int center);
-extern void fireEnemyBullet(void);
-extern float getAngle(int x1, int y1, int x2, int y2);
-extern void getSlope(int x1, int y1, int x2, int y2, float *dx, float *dy);
-extern void spawnShooter(int x, int y);
-extern void spawnRunner(int x, int y);
-extern SDL_Texture *loadTexture(char *filename);
-extern SDL_Texture *bossTexture[6];
-
-extern void bossDie(void);
-
-extern App app;
-extern Entity *player;
-extern Stage stage;
 Entity *boss;
 
 static void bossSpawnerTick1(void);
@@ -25,7 +11,7 @@ void spawnBossSpawner(void) {
     stage.entityTail->next = boss;
     stage.entityTail = boss;
 
-    boss->health = 40;
+    boss->health = 40 + (stage.wave % 5) * 10;
     if (stage.wave >= 10) boss->tick = bossSpawnerTick2;
     else boss->tick = bossSpawnerTick1;
     boss->die = bossDie;
@@ -35,9 +21,9 @@ void spawnBossSpawner(void) {
     boss->y = SCREEN_HEIGHT / 2;
     boss->texture = bossTexture[B_SPAWNER];
     SDL_QueryTexture(boss->texture, NULL, NULL, &boss->w, &boss->h);
-    boss->color.r = 255;
-    boss->color.g = 255;
-    boss->color.b = 255;
+    boss->color.r = 119;
+    boss->color.g = 22;
+    boss->color.b = 245;
     boss->color.a = 255;
 }
 
@@ -47,7 +33,7 @@ static void bossSpawnerTick1(void) {
         getSlope(player->x, player->y, boss->x, boss->y, &boss->dx, &boss->dy);
         if (boss->reload <= 0) {
             spawnRunner(boss->x, boss->y);
-            boss->reload = FPS;
+            boss->reload = FPS - 10;
         }
     }
 }

@@ -1,24 +1,7 @@
-#include "common.h"
+#include "enemyClasses.h"
 
-extern void addPowerup(int x, int y);
-extern void getSlope(int x1, int y1, int x2, int y2, float *dx, float *dy);
-extern void fireEnemyBullet(void);
-extern float getAngle(int x1, int y1, int x2, int y2);
-extern int getDistance(int x1, int y1, int x2, int y2);
-void blitRotated(SDL_Texture *texture, int x, int y, float angle);
-extern Entity *createBullet(Entity *shooter);
-extern SDL_Texture *loadTexture(char *filename);
-
-extern Entity *player;
-extern Entity *self;
-extern Stage stage;
-
-extern SDL_Texture *enemyTexture[10];
-
-extern void initEnemies(void);
 static void tickSlug(void);
 void slugShot(void);
-extern void enemyDie(void);
 
 void spawnSlug(int x, int y) {
     Entity *e;
@@ -29,8 +12,8 @@ void spawnSlug(int x, int y) {
     stage.entityTail = e;
 
     e->side = SIDE_BOSS;
-    e->x = SCREEN_WIDTH/2;
-    e->y = SCREEN_HEIGHT/2;
+    e->x = 250 + (rand() % 1500);
+    e->y = 250 + (rand() % 800);
     e->weapon = slugShot;
     e->texture = enemyTexture[SLUG];
     e->speed = 8;
@@ -60,7 +43,6 @@ static void tickSlug(void) {
         if (self->reload <= 0) {
             slugShot();
             self->reload = 8;
-            //self->reload /= getDistance(self->x, self->y, self->x + self->dx, self->y + self->dy);
         }
     }
 }

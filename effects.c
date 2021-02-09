@@ -1,17 +1,9 @@
-#include "common.h"
+#include "effects.h"
 
-extern void blit(SDL_Texture *texture, int x, int y, int center);
-extern SDL_Texture *loadTexture(char *filename);
-
-extern App app;
-extern Entity *self;
-extern Entity *player;
-extern Stage stage;
-
-static SDL_Texture *whiteSquare8;
+static SDL_Texture *effectSquare8;
 
 void initEffects(void) {
-    whiteSquare8 = loadTexture("resources/square8.png");
+    effectSquare8 = loadTexture("resources/square8.png");
 }
 
 void doEffects(void) {
@@ -54,10 +46,9 @@ void addEnemyDeathEffect(Entity *e) {
         f->dx /= 50;
         f->dy /= 50;
 
-        f->texture = whiteSquare8;
+        f->texture = effectSquare8;
 
         f->color = e->color;
-//        f->color.a = rand() % 255;
         f->color.r = 110;
         f->color.g = 110;
         f->color.b = 110;
@@ -83,7 +74,7 @@ void addPlayerDeathEffect(void)
         f->dx /= 50;
         f->dy /= 50;
 
-        f->texture = whiteSquare8;
+        f->texture = effectSquare8;
 
         //f->color = player->color;
         f->color.r = 110;

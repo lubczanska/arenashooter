@@ -1,24 +1,7 @@
-#include "common.h"
+#include "enemyClasses.h"
 
-extern void addPowerup(int x, int y);
-extern void getSlope(int x1, int y1, int x2, int y2, float *dx, float *dy);
-extern void fireEnemyBullet(void);
-extern float getAngle(int x1, int y1, int x2, int y2);
-extern int getDistance(int x1, int y1, int x2, int y2);
-void blitRotated(SDL_Texture *texture, int x, int y, float angle);
-extern Entity *createBullet(Entity *shooter);
-extern SDL_Texture *loadTexture(char *filename);
-
-extern Entity *player;
-extern Entity *self;
-extern Stage stage;
-
-extern SDL_Texture *enemyTexture[10];
-
-extern void initEnemies(void);
 static void tickShooter(void);
 void shooterShot(void);
-extern void enemyDie(void);
 
 void spawnShooter(int x, int y) {
     Entity *e;

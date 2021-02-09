@@ -1,21 +1,10 @@
-#include "common.h"
+#include "init.h"
 
-#include "SDL2/SDL_image.h"
-#include "SDL2/SDL_mixer.h"
-
-extern void initBullets(void);
-extern void initEnemies(void);
-extern void initBosses(void);
-extern void initEffects(void);
-extern void initFonts(void);
-extern void initItems(void);
-extern void initPlayer(void);
-extern void initSounds(void);
 void loadMusic(char *filename);
 void playMusic(int loop);
 
-extern App app;
-
+int SCREEN_WIDTH;
+int SCREEN_HEIGHT;
 
 void initSDL(void) {
 	int rendererFlags, windowFlags;
@@ -23,11 +12,11 @@ void initSDL(void) {
 	windowFlags = 0;
 
 	if (SDL_Init(SDL_INIT_VIDEO) < 0) {
-		printf("Couldn't initialize SDL: %s\n", SDL_GetError());
+		SDL_Log("Couldn't initialize SDL: %s", SDL_GetError());
 		exit(1);
 	}
     if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 1024) < 0) {
-        printf("Couldn't initialize SDL Mixer\n");
+        SDL_Log("Couldn't initialize SDL Mixer: %s", SDL_GetError());
         exit(1);
     }
     Mix_AllocateChannels(MAX_CHANNELS);
@@ -35,6 +24,13 @@ void initSDL(void) {
     app.volumeSounds = 50;
     Mix_Volume(CH_ANY, app.volumeSounds);
     Mix_VolumeMusic(app.volumeMusic);
+    SDL_DisplayMode dm;
+    if (SDL_GetDesktopDisplayMode(0, &dm) < 0) {
+        SDL_Log("SDL_GetDesktopDisplayMode failed: %s", SDL_GetError());
+        exit(1);
+    }
+    SCREEN_WIDTH = dm.w;
+    SCREEN_HEIGHT = dm.h;
 
     app.window = SDL_CreateWindow("arenashooter v1.0", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, windowFlags);
 	SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "linear");

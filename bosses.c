@@ -1,38 +1,19 @@
-#include "common.h"
+#include "bosses.h"
 
-extern void blit(SDL_Texture *texture, int x, int y, int center);
-extern void fireEnemyBullet(void);
-extern float getAngle(int x1, int y1, int x2, int y2);
-extern void getSlope(int x1, int y1, int x2, int y2, float *dx, float *dy);
-extern void spawnShooter(int x, int y);
-extern void spawnRunner(int x, int y);
-extern void addEnemyDeathEffect(Entity *e);
-extern SDL_Texture *loadTexture(char *filename);
 static SDL_Texture *bossHBFullTexture;
 static SDL_Texture *bossHBEmptyTexture;
+SDL_Texture *bossTexture[6];
 
-extern App app;
-extern Entity *player;
-extern Stage stage;
-extern Entity *boss;
+static void initBossBar(void);
+void bossDie(void);
+
 int bossMaxHealth;
 int bossBarX;
 
-static void initBossBar(void);
-
-void bossDie(void);
-
-extern void spawnBossShooter(void);
-extern void spawnBossSpawner(void);
-extern void spawnBossSpin(void);
-extern void spawnBossSplit(void);
-
-SDL_Texture *bossTexture[6];
-
 void initBosses(void) {
-    bossTexture[B_SHOOTER] = loadTexture("resources/playerSquare.png");
+    bossTexture[B_SHOOTER] = loadTexture("resources/shooter.png");
     bossTexture[B_SPAWNER] = loadTexture("resources/playerSquare.png");
-    bossTexture[B_SPIN] = loadTexture("resources/playerSquare.png");
+    bossTexture[B_SPIN] = loadTexture("resources/hexagon.png");
     bossTexture[B_SPLIT_0] = loadTexture("resources/bossSplit.png");
     bossTexture[B_SPLIT_1] = loadTexture("resources/bossSplit2.png");
     bossTexture[B_SPLIT_2] = loadTexture("resources/bossSplit3.png");
