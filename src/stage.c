@@ -86,12 +86,12 @@ static void doPause(void) {
 }
 
 static void doWave(void) {
-    if (stage.waveEnemies == 0 && stage.waveState == NORMAL) { //new wave
-        addPowerup(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 3 / 4);
+    if (stage.waveEnemies == 0 && stage.waveState == BOSS_END) { //boss wave enddddddddddddddddddddddd
+        addPowerupBoss();
         stage.waveState = END;
     }
-    else if (stage.waveEnemies == 0 && stage.waveState == BOSS_END) {
-        addPowerupBoss();
+    if (stage.waveEnemies == 0 && stage.waveState == NORMAL) { //new wave end
+        addPowerup(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 3 / 4);
         stage.waveState = END;
     }
     else if (stage.waveState == NEW) {
@@ -103,7 +103,7 @@ static void doWave(void) {
     }
     else if (stage.waveState == NEW_BEGIN) {
 
-        if (++stage.wave % 3 == 0) {
+        if (++stage.wave % 5 == 0) {
             stage.waveEnemies = 0;
             spawnBoss();
             stage.waveState = BOSS;

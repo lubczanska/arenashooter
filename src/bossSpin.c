@@ -7,14 +7,14 @@ static void multiFire(void);
 static int spinDirection;
 int attackTimer;
 
-void spawnBossSpin(void) {
+Entity *spawnBossSpin(void) {
     Entity *e;
     e = malloc(sizeof(Entity));
     memset(e, 0, sizeof(Entity));
     stage.entityTail->next = e;
     stage.entityTail = e;
 
-    e->health = 40 + (stage.wave % 5) * 10;
+    e->health = 40 + (stage.wave % 5) * 20;
     e->tick = bossSpinTick;
     e->die = bossDie;
     e->side = SIDE_BOSS;
@@ -30,6 +30,7 @@ void spawnBossSpin(void) {
     e->color.a = 255;
     attackTimer = SDL_GetTicks();
     spinDirection = 1;
+    return e;
 }
 
 static void bossSpinTick(void) {

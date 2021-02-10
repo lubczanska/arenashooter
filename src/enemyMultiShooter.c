@@ -14,13 +14,12 @@ void spawnMultiShooter(int x, int y) {
     e->side = SIDE_ENEMY;
     e->x = x;
     e->y = y;
-
-
     e->weapon = multiShooterShot;
     e->texture = enemyTexture[MULTI_SHOOTER];
     e->speed = MIN(4 + (stage.wave * 0.1), 7); //wave difficulty modificator
     e->tick = tickMultiShooter;
     e->health = 5;
+    e->reload = FPS / 2;
     SDL_QueryTexture(e->texture, NULL, NULL, &e->w, &e->h);
     e->color.r = 33;
     e->color.g = 120;

@@ -9,7 +9,7 @@ Entity *spawnBossShooter(void) {
     stage.entityTail->next = e;
     stage.entityTail = e;
 
-    e->health = 30 + (stage.wave % 5) * 5;
+    e->health = 30 + (stage.wave % 5) * 15;
     e->tick = bossShooterTick;
     e->die = bossDie;
     e->speed = 5;

@@ -193,7 +193,7 @@ static void speedTouch(Entity *other) {
 
 static void atkSpeedTouch(Entity *other) {
     if (other == player) {
-        player->atkSpeed = MAX(player->atkSpeed - 0.5, -6);
+        player->atkSpeed = MAX(player->atkSpeed + 0.3, 4);
         playSound(POWERUP, CH_ITEM);
         stage.waveState = NEW;
     }

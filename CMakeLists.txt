@@ -4,7 +4,7 @@ project(arenashooter C)
 find_package(SDL2 REQUIRED)
 include_directories(arenashooter ${SDL2_INCLUDE_DIRS})
 
-add_executable(arenashooter main.c draw.c init.c input.c stage.c common.h defines.h structs.h entities.c player.c util.c text.c bullets.c enemies.c items.c title.c playerweapons.c sound.c enemyweapons.c bosses.c bossSplit.c bossSpawner.c bossShooter.c effects.c bossSpin.c enemyShooter.c enemySniper.c enemyLineShooter.c enemyMultiShooter.c enemyCrossShooter.c enemyStarShooter.c enemySlowMultiShooter.c enemySlug.c help.c settings.c prompts.c bosses.h bossClasses.h bullets.h effects.h enemies.h enemyClasses.h entities.h init.h items.h player.h playerweapons.h title.h stage.h colors.c enemyRunner.c enemyRammer.c)
+add_executable(arenashooter src/main.c src/draw.c src/init.c src/input.c src/stage.c src/common.h src/defines.h src/structs.h src/entities.c src/player.c src/util.c src/text.c src/bullets.c src/enemies.c src/items.c src/title.c src/playerweapons.c src/sound.c src/enemyweapons.c src/bosses.c src/bossSplit.c src/bossSpawner.c src/bossShooter.c src/effects.c src/bossSpin.c src/enemyShooter.c src/enemySniper.c src/enemyLineShooter.c src/enemyMultiShooter.c src/enemyCrossShooter.c src/enemyStarShooter.c src/enemySlowMultiShooter.c src/enemySlug.c src/help.c src/settings.c src/prompts.c src/bosses.h src/bossClasses.h src/bullets.h src/effects.h src/enemies.h src/enemyClasses.h src/entities.h src/init.h src/items.h src/player.h src/playerweapons.h src/title.h src/stage.h src/enemyRunner.c src/enemyRammer.c)
 target_link_libraries(arenashooter ${SDL2_LIBRARIES})
 
 INCLUDE(FindPkgConfig)

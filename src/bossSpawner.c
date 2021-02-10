@@ -3,14 +3,14 @@
 static void bossSpawnerTick1(void);
 static void bossSpawnerTick2(void);
 
-void spawnBossSpawner(void) {
+Entity *spawnBossSpawner(void) {
     Entity *e;
     e = malloc(sizeof(Entity));
     memset(e, 0, sizeof(Entity));
     stage.entityTail->next = e;
     stage.entityTail = e;
 
-    e->health = 40 + (stage.wave % 5) * 10;
+    e->health = 40 + (stage.wave % 5) * 20;
     if (stage.wave >= 10) e->tick = bossSpawnerTick2;
     else e->tick = bossSpawnerTick1;
     e->die = bossDie;
@@ -24,6 +24,7 @@ void spawnBossSpawner(void) {
     e->color.g = 22;
     e->color.b = 245;
     e->color.a = 255;
+    return e;
 }
 
 static void bossSpawnerTick1(void) {

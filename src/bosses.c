@@ -44,15 +44,15 @@ void spawnBoss(void) {
 }
 
 void bossDie(void) {
-    addEnemyDeathEffect(boss);
+    addEnemyDeathEffect(self);
     boss = NULL;
-    stage.score += 200;
-    stage.waveState = BOSS_END;
-    stage.waveEnemies = 0;
     Entity *e;
     for (e = stage.entityHead.next; e != NULL; e = e->next) { //killing boss kills all spawned enemies too
         if (e->side >= SIDE_ENEMY) e-> health = 0;
     }
+    stage.score += 200;
+    stage.waveEnemies = 0;
+    stage.waveState = BOSS_END;
 }
 
 static void initBossBar(void) {
@@ -72,6 +72,11 @@ void drawBossBar(void) {
         }
     }
     else hlth = boss->health;
+    if (bossMaxHealth > 140) {
+        bossMaxHealth = 140;
+        hlth = MIN(140, hlth);
+        x = 10;
+    }
     for (int i = 0; i < hlth; i++) {
         blit(bossHBFullTexture, x, 80, 1);
         x += BOSS_BAR_GLYPH;
